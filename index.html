@@ -1,1 +1,1806 @@
+```
+<style>
+    :root {
+        --bg-dark: #050505;
+        --bg-deep: #0a0a0a;
+        --rose-gold: #b76e79;
+        --rose-gold-glow: rgba(183, 110, 121, 0.4);
+        --gold: #d4af37;
+        --gold-glow: rgba(212, 175, 55, 0.3);
+        --white: #ffffff;
+        --soft-pink: #fbcbc9;
+        --card-bg: rgba(15, 15, 15, 0.6);
+        --border-glass: rgba(183, 110, 121, 0.2);
+        --font-display: 'Playfair Display', serif;
+        --font-sans: 'Poppins', sans-serif;
+    }
 
+    /* Base & Reset */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-dark);
+        color: var(--white);
+        font-family: var(--font-sans);
+        overflow-x: hidden;
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Custom Premium Custom Cursor */
+    .custom-cursor {
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--rose-gold);
+        border-radius: 50%;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 10000;
+        transition: width 0.3s, height 0.3s, background-color 0.3s;
+    }
+
+    .custom-cursor-glow {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(183, 110, 121, 0.08) 0%, rgba(0,0,0,0) 70%);
+        position: fixed;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    /* Ambient Canvas overlay */
+    #ambient-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    /* Aurora Backdrops */
+    .aurora-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    .aurora-element {
+        position: absolute;
+        width: 60vw;
+        height: 60vw;
+        border-radius: 50%;
+        filter: blur(120px);
+        mix-blend-mode: screen;
+        opacity: 0.3;
+    }
+
+    .aurora-1 {
+        top: -20%;
+        left: -10%;
+        background: radial-gradient(circle, var(--rose-gold) 0%, transparent 80%);
+    }
+
+    .aurora-2 {
+        bottom: -20%;
+        right: -10%;
+        background: radial-gradient(circle, var(--gold) 0%, transparent 80%);
+    }
+
+    /* Global Music Controller Widget */
+    .music-widget {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: rgba(10, 10, 10, 0.8);
+        border: 1px solid var(--border-glass);
+        padding: 10px 20px;
+        border-radius: 40px;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        transform: translateY(150px);
+        opacity: 0;
+    }
+
+    .music-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--rose-gold), var(--gold));
+        border: none;
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        outline: none;
+        box-shadow: 0 4px 15px var(--rose-gold-glow);
+    }
+
+    .music-title {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--soft-pink);
+        font-weight: 300;
+    }
+
+    /* 1. Loader Screen */
+    #loader-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--bg-dark);
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loader-netflix-line {
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--rose-gold), var(--gold), transparent);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: 0 0 30px var(--rose-gold);
+    }
+
+    .loader-content {
+        text-align: center;
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    .loader-monogram {
+        font-family: var(--font-display);
+        font-size: 4rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--white), var(--rose-gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+        letter-spacing: 4px;
+    }
+
+    .loader-percentage {
+        font-family: var(--font-sans);
+        font-size: 0.9rem;
+        font-weight: 200;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        color: var(--gold);
+    }
+
+    /* 2. Welcome Intro Screen */
+    #welcome-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--bg-dark);
+        z-index: 88888;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .welcome-text {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        font-style: italic;
+        font-weight: 300;
+        line-height: 1.6;
+        max-width: 800px;
+        color: var(--white);
+        opacity: 0;
+    }
+
+    .welcome-heart-trigger {
+        margin-top: 40px;
+        background: transparent;
+        border: 1px solid var(--rose-gold);
+        padding: 20px 40px;
+        border-radius: 50px;
+        color: var(--rose-gold);
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(30px);
+        backdrop-filter: blur(10px);
+        background: rgba(183,110,121,0.03);
+        box-shadow: 0 0 20px rgba(183,110,121,0.1);
+        transition: all 0.4s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .welcome-heart-trigger:hover {
+        background: var(--rose-gold);
+        color: var(--white);
+        box-shadow: 0 0 30px var(--rose-gold-glow);
+        transform: translateY(30px) scale(1.05);
+    }
+
+    /* Global Structural Setup */
+    #main-render-wrapper {
+        display: none;
+        width: 100%;
+        position: relative;
+        z-index: 5;
+    }
+
+    section {
+        width: 100%;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Glassmorphism Styles */
+    .glass-panel {
+        background: var(--card-bg);
+        border: 1px solid var(--border-glass);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+
+    /* 3. Hero Section */
+    #hero-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+    }
+
+    .hero-centerpiece {
+        text-align: center;
+        z-index: 10;
+    }
+
+    .hero-subtitle-top {
+        font-family: var(--font-sans);
+        font-weight: 300;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 12px;
+        color: var(--gold);
+        margin-bottom: 25px;
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    .hero-main-title {
+        font-family: var(--font-display);
+        font-size: calc(4.5rem + 4vw);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -2px;
+        margin-bottom: 30px;
+    }
+
+    .hero-main-title span.h-thin {
+        font-weight: 400;
+        font-style: italic;
+        display: block;
+        color: var(--white);
+    }
+
+    .hero-main-title span.h-name {
+        display: block;
+        background: linear-gradient(to right, var(--white) 20%, var(--rose-gold) 50%, var(--gold) 80%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shineGlow 6s linear infinite;
+    }
+
+    @keyframes shineGlow {
+        to { background-position: 200% center; }
+    }
+
+    .hero-meta-grid {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        opacity: 0;
+        transform: translateY(30px);
+        margin-top: 20px;
+    }
+
+    .hero-meta-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-meta-val {
+        font-family: var(--font-display);
+        font-size: 1.8rem;
+        color: var(--white);
+    }
+
+    .hero-meta-lbl {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--rose-gold);
+        margin-top: 5px;
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+    }
+
+    .scroll-line {
+        width: 1px;
+        height: 60px;
+        background: linear-gradient(to bottom, var(--rose-gold), transparent);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .scroll-line::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: var(--white);
+        animation: scrollDrop 2s infinite ease-in-out;
+    }
+
+    @keyframes scrollDrop {
+        0% { top: -40%; }
+        100% { top: 100%; }
+    }
+
+    /* 4. Luxury Love Letter Section */
+    #letter-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 100px 20px;
+        background: linear-gradient(to bottom, var(--bg-dark), var(--bg-deep));
+    }
+
+    .letter-container {
+        width: 100%;
+        max-width: 850px;
+        padding: 80px 60px;
+        position: relative;
+    }
+
+    .letter-paper-texture {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        opacity: 0.02;
+        pointer-events: none;
+        background-image: radial-gradient(var(--white) 1px, transparent 0);
+        background-size: 24px 24px;
+    }
+
+    .letter-header {
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        font-style: italic;
+        color: var(--gold);
+        margin-bottom: 40px;
+    }
+
+    .letter-body {
+        font-family: var(--font-sans);
+        font-size: 1.15rem;
+        font-weight: 300;
+        line-height: 2;
+        color: rgba(255, 255, 255, 0.9);
+        text-align: justify;
+        min-height: 250px;
+    }
+
+    .letter-footer {
+        margin-top: 60px;
+        text-align: right;
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        color: var(--rose-gold);
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .letter-stamp {
+        position: absolute;
+        bottom: 40px;
+        left: 60px;
+        width: 70px;
+        height: 70px;
+        border: 1px dashed rgba(212, 175, 55, 0.4);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(212, 175, 55, 0.3);
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        transform: rotate(-15deg);
+        opacity: 0;
+    }
+
+    /* 5. Memory Gallery (Horizontal Smooth Scroll via ScrollTrigger) */
+    #gallery-section {
+        background-color: var(--bg-deep);
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .gallery-horizontal-track {
+        display: flex;
+        padding-left: 10vw;
+        padding-right: 25vw;
+        height: 65vh;
+        gap: 4vw;
+    }
+
+    .gallery-intro-card {
+        width: 350px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .gallery-title-h2 {
+        font-family: var(--font-display);
+        font-size: 3.5rem;
+        font-weight: 600;
+        line-height: 1.2;
+        color: var(--white);
+        margin-bottom: 15px;
+    }
+
+    .gallery-title-h2 span {
+        color: var(--rose-gold);
+        font-style: italic;
+        font-weight: 400;
+    }
+
+    .gallery-desc {
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: rgba(255,255,255,0.5);
+        line-height: 1.8;
+        letter-spacing: 1px;
+    }
+
+    .gallery-item {
+        width: 450px;
+        height: 100%;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+    }
+
+    .gallery-img-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        background-color: #111;
+    }
+
+    .gallery-img-placeholder {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(145deg, #121212, #1a1a1a);
+        z-index: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    .gallery-img-placeholder i {
+        font-size: 2.5rem;
+        color: var(--rose-gold);
+        margin-bottom: 15px;
+        opacity: 0.7;
+    }
+
+    .gallery-img-placeholder span {
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+    }
+
+    .gallery-real-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: relative;
+        z-index: 2;
+        transform: scale(1);
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .gallery-item:hover .gallery-real-img {
+        transform: scale(1.08);
+    }
+
+    .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 40px 30px;
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+        z-index: 3;
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .gallery-item-num {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        color: var(--gold);
+        font-style: italic;
+        margin-bottom: 5px;
+    }
+
+    .gallery-item-title {
+        font-family: var(--font-sans);
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--white);
+        letter-spacing: 1px;
+    }
+
+    /* 6. Reasons Why Section */
+    #reasons-section {
+        padding: 140px 20px;
+        background: linear-gradient(to bottom, var(--bg-deep), var(--bg-dark));
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 80px;
+    }
+
+    .section-subtitle {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 8px;
+        color: var(--gold);
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .section-title {
+        font-family: var(--font-display);
+        font-size: 3.5rem;
+        font-weight: 600;
+    }
+
+    .reasons-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+
+    .reason-card {
+        padding: 40px 30px;
+        height: 320px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    .reason-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, rgba(183,110,121,0.05) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .reason-card:hover::before {
+        opacity: 1;
+    }
+
+    .reason-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--rose-gold);
+        font-size: 1.3rem;
+        transition: all 0.4s ease;
+    }
+
+    .reason-card:hover .reason-icon {
+        background: var(--rose-gold);
+        color: var(--white);
+        box-shadow: 0 0 20px var(--rose-gold-glow);
+        transform: scale(1.05);
+    }
+
+    .reason-details h3 {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        font-weight: 500;
+        margin-bottom: 12px;
+        color: var(--white);
+    }
+
+    .reason-details p {
+        font-size: 0.88rem;
+        font-weight: 300;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.6);
+    }
+
+    /* 7. Timeline Section */
+    #timeline-section {
+        padding: 140px 20px;
+        background-color: var(--bg-dark);
+        position: relative;
+    }
+
+    .timeline-wrapper {
+        max-width: 900px;
+        margin: 60px auto 0 auto;
+        position: relative;
+    }
+
+    .timeline-spine {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent 0%, var(--border-glass) 15%, var(--border-glass) 85%, transparent 100%);
+    }
+
+    .timeline-spine-progress {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1px;
+        height: 0%;
+        background: linear-gradient(to bottom, var(--gold), var(--rose-gold));
+    }
+
+    .timeline-node {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 120px;
+        position: relative;
+        width: 100%;
+    }
+
+    .timeline-node:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    .timeline-bubble {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--bg-dark);
+        border: 2px solid var(--border-glass);
+        z-index: 10;
+        transition: all 0.4s ease;
+    }
+
+    .timeline-node.active .timeline-bubble {
+        border-color: var(--gold);
+        background: var(--gold);
+        box-shadow: 0 0 15px var(--gold-glow);
+        scale: 1.2;
+    }
+
+    .timeline-content-box {
+        width: 44%;
+        padding: 40px;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .timeline-node.active .timeline-content-box {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .timeline-time {
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        color: var(--gold);
+        font-style: italic;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .timeline-node-title {
+        font-family: var(--font-sans);
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        letter-spacing: 0.5px;
+    }
+
+    .timeline-node-desc {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        font-weight: 300;
+        color: rgba(255,255,255,0.6);
+    }
+
+    /* 8. Interactive Cake Section */
+    #cake-section {
+        padding: 140px 20px;
+        background: linear-gradient(to bottom, var(--bg-dark), var(--bg-deep));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cake-interaction-box {
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .cake-hint-text {
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--soft-pink);
+        margin-top: 40px;
+        opacity: 0.8;
+        animation: pulseHint 2s infinite alternate;
+    }
+
+    @keyframes pulseHint {
+        0% { opacity: 0.4; transform: translateY(0); }
+        100% { opacity: 1; transform: translateY(-5px); }
+    }
+
+    /* Luxury SVG Cake Styling */
+    .cake-svg-wrapper {
+        width: 280px;
+        height: 280px;
+        position: relative;
+    }
+
+    .cake-svg-wrapper svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+
+    /* Flame animation controls */
+    .cake-flame {
+        transform-origin: center bottom;
+        animation: flicker 1.5s infinite alternate ease-in-out;
+        opacity: 0; /* Hidden initially, illuminated upon click sequence */
+        transition: opacity 0.5s ease;
+    }
+
+    @keyframes flicker {
+        0% { transform: scaleX(0.9) rotate(-2deg); filter: drop-shadow(0 0 4px var(--gold)); }
+        100% { transform: scaleX(1.1) rotate(3deg); filter: drop-shadow(0 0 12px var(--rose-gold)); }
+    }
+
+    /* 12. Cinematic Ending Section */
+    #ending-section {
+        background-color: #000000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+    }
+
+    .ending-block {
+        z-index: 10;
+        width: 100%;
+        max-width: 900px;
+        padding: 20px;
+    }
+
+    .ending-massive-text {
+        font-family: var(--font-display);
+        font-size: calc(4rem + 5vw);
+        font-weight: 700;
+        color: var(--white);
+        letter-spacing: -2px;
+        opacity: 0;
+        transform: scale(0.9);
+        line-height: 1.1;
+    }
+
+    .ending-sub-h3 {
+        font-family: var(--font-sans);
+        font-size: 1.5rem;
+        font-weight: 200;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        color: var(--rose-gold);
+        margin-top: 40px;
+        opacity: 0;
+    }
+
+    .ending-signature {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        font-style: italic;
+        color: var(--gold);
+        margin-top: 80px;
+        opacity: 0;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1024px) {
+        .reasons-grid {
+            grid-template-columns: repeat(2, 1fr);
+            padding: 0 40px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h1 { font-size: 4.5rem; }
+        .hero-main-title { font-size: 3.5rem; }
+        .letter-container { padding: 50px 30px; }
+        .letter-header { font-size: 1.8rem; }
+        .letter-body { font-size: 1rem; line-height: 1.8; }
+        .gallery-horizontal-track { height: 55vh; }
+        .gallery-item { width: 320px; }
+        .reasons-grid { grid-template-columns: 1fr; padding: 0; }
+        .timeline-spine { left: 30px; }
+        .timeline-spine-progress { left: 30px; }
+        .timeline-node { flex-direction: column !important; align-items: flex-start; margin-bottom: 60px; padding-left: 60px; }
+        .timeline-content-box { width: 100%; padding: 30px; }
+        .timeline-bubble { left: 30px; top: 38px; }
+        .section-title { font-size: 2.5rem; }
+        .music-widget { bottom: 20px; right: 20px; padding: 8px 15px; }
+    }
+</style>
+
+```
+
+```
+<!-- Audio Tag -->
+<audio id="romantic-audio" src="music/waalian.mp3" loop preload="auto"></audio>
+
+<!-- Custom Luxury Cursor -->
+<div class="custom-cursor" id="cursor-dot"></div>
+<div class="custom-cursor-glow" id="cursor-glow"></div>
+
+<!-- Background Elements -->
+<canvas id="ambient-canvas"></canvas>
+<div class="aurora-container">
+    <div class="aurora-element aurora-1"></div>
+    <div class="aurora-element aurora-2"></div>
+</div>
+
+<!-- Music Control Widget -->
+<div class="music-widget" id="music-controller">
+    <span class="music-title">Waalian</span>
+    <button class="music-btn" id="mute-toggle" aria-label="Toggle Background Music">
+        <i class="fas fa-volume-up" id="music-icon"></i>
+    </button>
+</div>
+
+<!-- 1. Luxury Loading Screen -->
+<div id="loader-screen">
+    <div class="loader-netflix-line" id="net-line"></div>
+    <div class="loader-content" id="load-box">
+        <div class="loader-monogram">F</div>
+        <div class="loader-percentage" id="load-percentage">00%</div>
+    </div>
+</div>
+
+<!-- 2. Welcome Screen Trigger -->
+<div id="welcome-screen">
+    <div class="welcome-container">
+        <div class="welcome-text" id="welcome-phrase"></div>
+        <button class="welcome-heart-trigger" id="enter-experience-btn">
+            <span>Touch the Heart</span> ❤️
+        </button>
+    </div>
+</div>
+
+<!-- Main Experience Wrapper -->
+<div id="main-render-wrapper">
+
+    <!-- 3. Hero Section -->
+    <section id="hero-section">
+        <div class="hero-centerpiece">
+            <div class="hero-subtitle-top" id="hero-sub">Sophisticated & Eternal</div>
+            <h1 class="hero-main-title">
+                <span class="h-thin">Happy Birthday</span>
+                <span class="h-name">FAriha</span>
+            </h1>
+            <div class="hero-meta-grid" id="hero-meta">
+                <div class="hero-meta-item">
+                    <span class="hero-meta-val">15</span>
+                    <span class="hero-meta-lbl">July</span>
+                </div>
+                <div class="hero-meta-item" style="width: 1px; height: 35px; background: rgba(255,255,255,0.15); margin-top: 5px;"></div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-val">2026</span>
+                    <span class="hero-meta-lbl">Chapter</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" id="hero-scroll-indicator">
+            <span style="font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--rose-gold);">Scroll Down</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- 4. Luxury Love Letter Section -->
+    <section id="letter-section">
+        <div class="letter-container glass-panel" id="letter-panel">
+            <div class="letter-paper-texture"></div>
+            <h2 class="letter-header">Dearest FAriha,</h2>
+            <div class="letter-body" id="typewriter-target"></div>
+            <div class="letter-footer" id="letter-sig">Forever Yours,<br><span style="font-family: var(--font-sans); font-size: 1.1rem; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-top: 10px; display: inline-block;">Shano</span></div>
+            <div class="letter-stamp" id="letter-st">SEALED<br>WITH LOVE</div>
+        </div>
+    </section>
+
+    <!-- 5. Memory Gallery Horizontal Section -->
+    <section id="gallery-section">
+        <div class="gallery-horizontal-track" id="gallery-track">
+            
+            <div class="gallery-intro-card">
+                <span class="section-subtitle">Visual Chapters</span>
+                <h2 class="gallery-title-h2">Captured<br><span>Memories</span></h2>
+                <p class="gallery-desc">Every moment preserved in time, illuminating the elegant narrative of us.</p>
+            </div>
+
+            <!-- Card 1 -->
+            <div class="gallery-item">
+                <div class="gallery-img-container">
+                    <div class="gallery-img-placeholder">
+                        <i class="fa-regular fa-image"></i>
+                        <span>photo1.jpg</span>
+                    </div>
+                    <img class="gallery-real-img" src="images/photo1.jpg" alt="Memory Frame 1" onerror="this.style.opacity='0';">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-num">I</div>
+                    <div class="gallery-item-title">The First Radiance</div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="gallery-item">
+                <div class="gallery-img-container">
+                    <div class="gallery-img-placeholder">
+                        <i class="fa-regular fa-image"></i>
+                        <span>photo2.jpg</span>
+                    </div>
+                    <img class="gallery-real-img" src="images/photo2.jpg" alt="Memory Frame 2" onerror="this.style.opacity='0';">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-num">II</div>
+                    <div class="gallery-item-title">Shared Laughter</div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="gallery-item">
+                <div class="gallery-img-container">
+                    <div class="gallery-img-placeholder">
+                        <i class="fa-regular fa-image"></i>
+                        <span>photo3.jpg</span>
+                    </div>
+                    <img class="gallery-real-img" src="images/photo3.jpg" alt="Memory Frame 3" onerror="this.style.opacity='0';">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-num">III</div>
+                    <div class="gallery-item-title">Serendipity in Motion</div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="gallery-item">
+                <div class="gallery-img-container">
+                    <div class="gallery-img-placeholder">
+                        <i class="fa-regular fa-image"></i>
+                        <span>photo4.jpg</span>
+                    </div>
+                    <img class="gallery-real-img" src="images/photo4.jpg" alt="Memory Frame 4" onerror="this.style.opacity='0';">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-num">IV</div>
+                    <div class="gallery-item-title">Quiet Afternoons</div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="gallery-item">
+                <div class="gallery-img-container">
+                    <div class="gallery-img-placeholder">
+                        <i class="fa-regular fa-image"></i>
+                        <span>photo5.jpg</span>
+                    </div>
+                    <img class="gallery-real-img" src="images/photo5.jpg" alt="Memory Frame 5" onerror="this.style.opacity='0';">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-num">V</div>
+                    <div class="gallery-item-title">Midnight Confessions</div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="gallery-item">
+                <div class="gallery-img-container">
+                    <div class="gallery-img-placeholder">
+                        <i class="fa-regular fa-image"></i>
+                        <span>photo6.jpg</span>
+                    </div>
+                    <img class="gallery-real-img" src="images/photo6.jpg" alt="Memory Frame 6" onerror="this.style.opacity='0';">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-num">VI</div>
+                    <div class="gallery-item-title">Elegance in Silence</div>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="gallery-item">
+                <div class="gallery-img-container">
+                    <div class="gallery-img-placeholder">
+                        <i class="fa-regular fa-image"></i>
+                        <span>photo7.jpg</span>
+                    </div>
+                    <img class="gallery-real-img" src="images/photo7.jpg" alt="Memory Frame 7" onerror="this.style.opacity='0';">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-num">VII</div>
+                    <div class="gallery-item-title">Unspoken Bond</div>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="gallery-item">
+                <div class="gallery-img-container">
+                    <div class="gallery-img-placeholder">
+                        <i class="fa-regular fa-image"></i>
+                        <span>photo8.jpg</span>
+                    </div>
+                    <img class="gallery-real-img" src="images/photo8.jpg" alt="Memory Frame 8" onerror="this.style.opacity='0';">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-item-num">VIII</div>
+                    <div class="gallery-item-title">Infinite Horizon</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 6. Reasons Why I Love You Section -->
+    <section id="reasons-section">
+        <div class="section-header">
+            <span class="section-subtitle">My Complete Heart</span>
+            <h2 class="section-title">Eight Realities of You</h2>
+        </div>
+        
+        <div class="reasons-grid">
+            <!-- Card 1 -->
+            <div class="reason-card glass-panel">
+                <div class="reason-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <div class="reason-details">
+                    <h3>Your Grace</h3>
+                    <p>The effortless elegance you radiate in every room you step into, redefining poise.</p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="reason-card glass-panel">
+                <div class="reason-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                <div class="reason-details">
+                    <h3>Your Kindness</h3>
+                    <p>A gentle, profound spirit that treats the world with unmatched empathy and warmth.</p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="reason-card glass-panel">
+                <div class="reason-icon"><i class="fa-solid fa-face-smile-beam"></i></div>
+                <div class="reason-details">
+                    <h3>Your Smile</h3>
+                    <p>The perfect, shimmering line that instantly eliminates any dark day I encounter.</p>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="reason-card glass-panel">
+                <div class="reason-icon"><i class="fa-solid fa-brain"></i></div>
+                <div class="reason-details">
+                    <h3>Your Brilliance</h3>
+                    <p>The stellar intelligence and sharp perspective you carry through life's dynamics.</p>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="reason-card glass-panel">
+                <div class="reason-icon"><i class="fa-solid fa-anchor"></i></div>
+                <div class="reason-details">
+                    <h3>Your Strength</h3>
+                    <p>An unwavering inner fortress that stays true to values, beautiful yet completely resilient.</p>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="reason-card glass-panel">
+                <div class="reason-icon"><i class="fa-solid fa-feather-pointed"></i></div>
+                <div class="reason-details">
+                    <h3>Your Voice</h3>
+                    <p>A serene, melodic rhythm that anchors me, serving as my ultimate sense of comfort.</p>
+                </div>
+            </div>
+            <!-- Card 7 -->
+            <div class="reason-card glass-panel">
+                <div class="reason-icon"><i class="fa-solid fa-infinity"></i></div>
+                <div class="reason-details">
+                    <h3>Your Soul</h3>
+                    <p>A depth of essence so pure and genuine, it makes everything else feel superficial.</p>
+                </div>
+            </div>
+            <!-- Card 8 -->
+            <div class="reason-card glass-panel">
+                <div class="reason-icon"><i class="fa-solid fa-star"></i></div>
+                <div class="reason-details">
+                    <h3>Your Presence</h3>
+                    <p>Simply being you—the ultimate privilege to witness, love, and celebrate every single day.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Timeline Section -->
+    <section id="timeline-section">
+        <div class="section-header">
+            <span class="section-subtitle">Chronicles of Us</span>
+            <h2 class="section-title">The Elegant Sequence</h2>
+        </div>
+
+        <div class="timeline-wrapper">
+            <div class="timeline-spine">
+                <div class="timeline-spine-progress" id="t-progress"></div>
+            </div>
+
+            <!-- Milestone 1 -->
+            <div class="timeline-node">
+                <div class="timeline-bubble"></div>
+                <div class="timeline-content-box glass-panel">
+                    <span class="timeline-time">The Genesis</span>
+                    <h3 class="timeline-node-title">How We Met</h3>
+                    <p class="timeline-node-desc">An accidental crossroad that rewrote my entire destiny. The moment standard gravity shifted, and you became the focal point of my universe.</p>
+                </div>
+            </div>
+
+            <!-- Milestone 2 -->
+            <div class="timeline-node">
+                <div class="timeline-bubble"></div>
+                <div class="timeline-content-box glass-panel">
+                    <span class="timeline-time">The Foundation</span>
+                    <h3 class="timeline-node-title">Beautiful Memories</h3>
+                    <p class="timeline-node-desc">Days filled with unfiltered laughter, lingering conversations that challenged the dawn, and the quiet understanding that grew between our hearts.</p>
+                </div>
+            </div>
+
+            <!-- Milestone 3 -->
+            <div class="timeline-node">
+                <div class="timeline-bubble"></div>
+                <div class="timeline-content-box glass-panel">
+                    <span class="timeline-time">The Present</span>
+                    <h3 class="timeline-node-title">Today</h3>
+                    <p class="timeline-node-desc">Standing here on July 15, completely mesmerized by the woman you have become. Celebrating your existence with reverence and deep, profound pride.</p>
+                </div>
+            </div>
+
+            <!-- Milestone 4 -->
+            <div class="timeline-node">
+                <div class="timeline-bubble"></div>
+                <div class="timeline-content-box glass-panel">
+                    <span class="timeline-time">The Horizon</span>
+                    <h3 class="timeline-node-title">The Future</h3>
+                    <p class="timeline-node-desc">An infinite landscape of unwritten chapters, shared adventures, and quiet joys. A promise to stand by you, honoring your light for all the tomorrows to come.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 8. Interactive Cake Section -->
+    <section id="cake-section">
+        <div class="section-header">
+            <span class="section-subtitle">The Ritual</span>
+            <h2 class="section-title">Make A Wish, FAriha</h2>
+        </div>
+
+        <div class="cake-interaction-box" id="cake-trigger-zone">
+            <div class="cake-svg-wrapper">
+                <svg viewBox="0 0 300 300" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)">
+                    <!-- Cake Base Platter / Plate -->
+                    <path d="M 30,230 Q 150,260 270,230 L 250,250 Q 150,270 50,250 Z" fill="#1f1f1f" stroke="rgba(214,175,55,0.4)" stroke-width="1.5" />
+                    
+                    <!-- Layer 1 (Bottom Tier) -->
+                    <path d="M 50,225 Q 150,245 250,225 L 250,170 Q 150,190 50,170 Z" fill="#141414" stroke="rgba(183,110,121,0.3)" stroke-width="1" />
+                    <path d="M 50,170 Q 150,190 250,170" fill="none" stroke="var(--gold)" stroke-width="2" opacity="0.4" />
+                    <!-- Decorative gold lines on bottom tier -->
+                    <path d="M 70,215 Q 150,232 230,215" fill="none" stroke="var(--rose-gold)" stroke-width="1" opacity="0.3" />
+                    
+                    <!-- Layer 2 (Top Tier) -->
+                    <path d="M 75,170 Q 150,188 225,170 L 225,120 Q 150,138 75,120 Z" fill="#1c1c1c" stroke="rgba(183,110,121,0.3)" stroke-width="1" />
+                    
+                    <!-- Premium Cream Drips Effect -->
+                    <path d="M 75,120 Q 90,135 100,125 Q 115,140 130,123 Q 150,142 170,125 Q 190,138 205,122 Q 215,133 225,120 L 225,115 Q 150,130 75,115 Z" fill="var(--rose-gold)" opacity="0.85" />
+                    
+                    <!-- Central Elegant Candle -->
+                    <rect x="146" y="70" width="8" height="45" rx="3" fill="url(#candle-grad)" />
+                    <!-- Candle Wick -->
+                    <line x1="150" y1="70" x2="150" y2="62" stroke="#444" stroke-width="2" />
+                    
+                    <!-- Elegant Flame -->
+                    <path class="cake-flame" id="main-candle-flame" d="M 150,62 Q 142,50 150,34 Q 158,50 150,62 Z" fill="url(#flame-grad)" />
+                    
+                    <!-- Gradients Definition -->
+                    <defs>
+                        <linearGradient id="candle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="var(--gold)" />
+                            <stop offset="50%" stop-color="#fff" />
+                            <stop offset="100%" stop-color="var(--gold)" />
+                        </linearGradient>
+                        <linearGradient id="flame-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#ff4500" />
+                            <stop offset="40%" stop-color="#ffae42" />
+                            <stop offset="80%" stop-color="var(--gold)" />
+                            <stop offset="100%" stop-color="#fff" stop-opacity="0.9" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="cake-hint-text" id="cake-instruction-label">Click to Light Candle</div>
+        </div>
+    </section>
+
+    <!-- 12. Cinematic Ending Section -->
+    <section id="ending-section">
+        <div class="ending-block">
+            <h2 class="ending-massive-text" id="end-m1">I Love You</h2>
+            <h3 class="ending-sub-h3" id="end-m2">Happy Birthday Again, FAriha ❤️</h3>
+            <div class="ending-signature" id="end-m3">Forever Yours,<br><span style="font-family: var(--font-sans); font-size: 1.3rem; font-weight: 300; letter-spacing: 6px; text-transform: uppercase; color: var(--rose-gold); margin-top: 15px; display: inline-block;">Shano</span></div>
+        </div>
+    </section>
+
+</div>
+
+<!-- JS Dependencies Execution -->
+<script>
+    // Ensure standard window objects exist
+    window.addEventListener('DOMContentLoaded', () => {
+        
+        // Register GSAP Plugins explicitly
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Premium Lenis Scroll Init
+        const lenisInstance = new Lenis({
+            duration: 1.4,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function lenisRaf(time) {
+            lenisInstance.raf(time);
+            requestAnimationFrame(lenisRaf);
+        }
+        requestAnimationFrame(lenisRaf);
+
+        // Premium Custom Mouse Tracking Control
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorGlow = document.getElementById('cursor-glow');
+
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1, ease: 'power2.out' });
+            gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.4, ease: 'power2.out' });
+        });
+
+        // Interactive hover expansions for magnetic feel
+        document.querySelectorAll('button, .reason-card, .gallery-item, #cake-trigger-zone').forEach(elem => {
+            elem.addEventListener('mouseenter', () => {
+                gsap.to(cursorDot, { scale: 2.5, backgroundColor: 'rgba(187,110,121,0.2)', borderColor: 'var(--gold)', duration: 0.3 });
+            });
+            elem.addEventListener('mouseleave', () => {
+                gsap.to(cursorDot, { scale: 1, backgroundColor: 'transparent', borderColor: 'var(--rose-gold)', duration: 0.3 });
+            });
+        });
+
+        // Ambient Canvas Overlay Configuration (Floating Hearts & Particles)
+        const ambientCanvas = document.getElementById('ambient-canvas');
+        const ambientCtx = ambientCanvas.getContext('2d');
+        let particlesArr = [];
+
+        function resizeAmbientCanvas() {
+            ambientCanvas.width = window.innerWidth;
+            ambientCanvas.height = window.innerHeight;
+        }
+        resizeAmbientCanvas();
+        window.addEventListener('resize', resizeAmbientCanvas);
+
+        class AmbientElement {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * ambientCanvas.height; 
+            }
+            reset() {
+                this.x = Math.random() * ambientCanvas.width;
+                this.y = ambientCanvas.height + 20;
+                this.size = Math.random() * 12 + 4;
+                this.speedY = Math.random() * 0.6 + 0.2;
+                this.speedX = Math.sin(Math.random() * 2) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
+                this.isHeart = Math.random() > 0.65; 
+                this.hueRotation = Math.random() * 20;
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -20) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ambientCtx.save();
+                ambientCtx.globalAlpha = this.opacity;
+                if (this.isHeart) {
+                    ambientCtx.fillStyle = '#b76e79';
+                    ambientCtx.beginPath();
+                    let topY = this.y - this.size / 2;
+                    ambientCtx.moveTo(this.x, this.y);
+                    ambientCtx.bezierCurveTo(this.x - this.size, topY, this.x - this.size, this.y - this.size * 1.5, this.x, this.y - this.size * 1.3);
+                    ambientCtx.bezierCurveTo(this.x + this.size, this.y - this.size * 1.5, this.x + this.size, topY, this.x, this.y);
+                    ambientCtx.closePath();
+                    ambientCtx.fill();
+                } else {
+                    // Soft Rose Gold / Gold Sparkle
+                    ambientCtx.fillStyle = Math.random() > 0.5 ? '#d4af37' : '#fbcbc9';
+                    ambientCtx.beginPath();
+                    ambientCtx.arc(this.x, this.y, this.size / 3, 0, Math.PI * 2);
+                    ambientCtx.closePath();
+                    ambientCtx.fill();
+                }
+                ambientCtx.restore();
+            }
+        }
+
+        function initAmbientMatrix() {
+            particlesArr = [];
+            const limit = window.innerWidth < 768 ? 35 : 80;
+            for (let i = 0; i < limit; i++) {
+                particlesArr.push(new AmbientElement());
+            }
+        }
+        initAmbientMatrix();
+
+        function animateAmbientLoop() {
+            ambientCtx.clearRect(0, 0, ambientCanvas.width, ambientCanvas.height);
+            for (let i = 0; i < particlesArr.length; i++) {
+                particlesArr[i].update();
+                particlesArr[i].draw();
+            }
+            requestAnimationFrame(animateAmbientLoop);
+        }
+        animateAmbientLoop();
+
+        // 1. Loader Timeline Execution
+        let loadingObj = { value: 0 };
+        const percentageElement = document.getElementById('load-percentage');
+        
+        let loaderTimeline = gsap.timeline();
+
+        loaderTimeline.to('#net-line', {
+            width: '100%',
+            duration: 2.8,
+            ease: 'power3.inOut'
+        });
+
+        loaderTimeline.to(loadingObj, {
+            value: 100,
+            duration: 2.6,
+            ease: 'power2.out',
+            onUpdate: () => {
+                percentageElement.innerText = Math.floor(loadingObj.value).toString().padStart(2, '0') + '%';
+            }
+        }, 0);
+
+        loaderTimeline.to('#load-box', {
+            opacity: 1,
+            scale: 1,
+            duration: 1,
+            ease: 'power2.out'
+        }, 0.3);
+
+        loaderTimeline.to('#loader-screen', {
+            opacity: 0,
+            display: 'none',
+            duration: 0.8,
+            ease: 'power4.inOut',
+            onComplete: initWelcomeSequence
+        }, '+=0.2');
+
+
+        // 2. Welcome Intro Interface Trigger Sequence
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const welcomePhrase = document.getElementById('welcome-phrase');
+        const enterBtn = document.getElementById('enter-experience-btn');
+        const mainAudio = document.getElementById('romantic-audio');
+
+        const deepRomanticPhrase = "Someone made something special only for you...";
+
+        function initWelcomeSequence() {
+            gsap.set(welcomeScreen, { display: 'flex' });
+            
+            // Classic cinematic typewriter effect for intro text
+            let phraseObj = { charCount: 0 };
+            gsap.to(phraseObj, {
+                charCount: deepRomanticPhrase.length,
+                duration: 3,
+                ease: 'none',
+                onUpdate: () => {
+                    welcomePhrase.innerText = deepRomanticPhrase.substring(0, Math.ceil(phraseObj.charCount));
+                },
+                onComplete: () => {
+                    gsap.to(enterBtn, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power3.out'
+                    });
+                }
+            });
+            gsap.to(welcomePhrase, { opacity: 1, duration: 1 });
+        }
+
+        // Audio Engineering Module
+        const muteToggle = document.getElementById('mute-toggle');
+        const musicIcon = document.getElementById('music-icon');
+        let audioIsMuted = false;
+
+        muteToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (audioIsMuted) {
+                mainAudio.muted = false;
+                musicIcon.className = 'fas fa-volume-up';
+                audioIsMuted = false;
+            } else {
+                mainAudio.muted = true;
+                musicIcon.className = 'fas fa-volume-mute';
+                audioIsMuted = true;
+            }
+        });
+
+        enterBtn.addEventListener('click', () => {
+            // Play audio context on direct explicit confirmation interaction
+            mainAudio.play().then(() => {
+                gsap.to('#music-controller', { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' });
+            }).catch(err => {
+                console.log("Audio play context initiated post gesture fallback restriction.");
+                gsap.to('#music-controller', { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' });
+            });
+
+            // Transition welcome wrap out, present main application framework
+            gsap.to(welcomeScreen, {
+                opacity: 0,
+                scale: 1.05,
+                duration: 1.2,
+                ease: 'power4.inOut',
+                onComplete: () => {
+                    welcomeScreen.style.display = 'none';
+                    revealMainExperience();
+                }
+            });
+        });
+
+        // 3. Reveal Main Framework & Execute Global Scroll Animations
+        const mainWrapper = document.getElementById('main-render-wrapper');
+
+        function revealMainExperience() {
+            gsap.set(mainWrapper, { display: 'block' });
+            
+            // Hero Entrance Animations
+            let heroTL = gsap.timeline();
+            heroTL.to('#hero-sub', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' })
+                  .from('.h-thin', { opacity: 0, y: 30, duration: 1.2, ease: 'power3.out' }, '-=0.9')
+                  .from('.h-name', { opacity: 0, scale: 0.95, duration: 1.5, ease: 'power4.out' }, '-=1')
+                  .to('#hero-meta', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=1')
+                  .to('#hero-scroll-indicator', { opacity: 1, duration: 0.8 }, '-=0.5');
+
+            // Bind modern architectural parallax animations across segments
+            buildScrollControlledSequences();
+        }
+
+        function buildScrollControlledSequences() {
+            // 4. Typewriter Luxury Love Letter Sequence
+            const narrativeLetterText = "From the moment you entered my world, everything changed. Your elegance isn't just in the way you carry yourself, FAriha, it's woven into the purity of your soul and the brilliant warmth of your heart. Every single conversation with you is a treasure I protect, and every memory shared is a permanent constellation in my sky. Today, on July 15, I want you to remember how deeply appreciated, completely revered, and loved you truly are. You are my serene anchor, my greatest joy, and my beautiful future.";
+            
+            let letterTarget = document.getElementById('typewriter-target');
+            let letterProgress = { length: 0 };
+
+            let letterTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#letter-section',
+                    start: 'top 65%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
+            letterTimeline.to('#letter-panel', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' });
+            letterTimeline.to(letterProgress, {
+                length: narrativeLetterText.length,
+                duration: 8,
+                ease: 'none',
+                onUpdate: () => {
+                    letterTarget.innerText = narrativeLetterText.substring(0, Math.ceil(letterProgress.length));
+                }
+            }, '-=0.2');
+            letterTimeline.to('#letter-sig', { opacity: 1, y: 0, duration: 1 }, '-=0.5');
+            letterTimeline.to('#letter-st', { opacity: 1, scale: 1, rotation: -15, duration: 0.8, ease: 'elastic.out(1, 0.5)' }, '-=0.7');
+
+            // 5. Horizontal Gallery Smooth Scroll Mechanism
+            const galleryTrack = document.getElementById('gallery-track');
+            
+            gsap.to(galleryTrack, {
+                x: () => -(galleryTrack.scrollWidth - window.innerWidth),
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#gallery-section',
+                    pin: true,
+                    scrub: 1,
+                    start: 'top top',
+                    end: () => `+=${galleryTrack.scrollWidth - window.innerWidth}`,
+                    invalidateOnRefresh: true
+                }
+            });
+
+            // Parallax subtlety inside image containers
+            document.querySelectorAll('.gallery-real-img').forEach(img => {
+                gsap.fromTo(img, 
+                    { x: -15 },
+                    {
+                        x: 15,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: img,
+                            containerAnimation: gsap.getById('gallery-track'), // fallback reference integration
+                            start: 'left right',
+                            end: 'right left',
+                            scrub: true
+                        }
+                    }
+                );
+            });
+
+            // 6. Reasons Why Grid Entrance Animation Array
+            gsap.to('.reason-card', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '#reasons-section',
+                    start: 'top 60%'
+                }
+            });
+
+            // 7. Timeline Node & Spine Filling Mechanics
+            let timelineNodes = document.querySelectorAll('.timeline-node');
+            
+            timelineNodes.forEach((node, idx) => {
+                ScrollTrigger.create({
+                    trigger: node,
+                    start: 'top 70%',
+                    end: 'bottom 30%',
+                    onEnter: () => node.classList.add('active'),
+                    onEnterBack: () => node.classList.add('active'),
+                    onLeave: () => { if(idx !== timelineNodes.length-1) node.classList.remove('active'); },
+                    onLeaveBack: () => { if(idx !== 0) node.classList.remove('active'); }
+                });
+            });
+
+            // Growth parameter for Spine line tracking progress
+            gsap.to('#t-progress', {
+                height: '100%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.timeline-wrapper',
+                    start: 'top 70%',
+                    end: 'bottom 40%',
+                    scrub: true
+                }
+            });
+
+            // 12. Ending Sequence Intercept Layout
+            let endTL = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#ending-section',
+                    start: 'top top',
+                    end: '+=150%',
+                    pin: true,
+                    scrub: 1
+                }
+            });
+
+            endTL.to('#end-m1', { opacity: 1, scale: 1, duration: 1.5, ease: 'power2.out' })
+                 .to('#end-m1', { opacity: 0.1, filter: 'blur(10px)', duration: 1 }, '+=1')
+                 .to('#end-m2', { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out' })
+                 .to('#end-m3', { opacity: 1, duration: 1.2 }, '-=0.3')
+                 .call(() => { executeEndingCelebrationSparks(); }, null, '+=0.2');
+        }
+
+        // 8. Interactive Cake Module Execution
+        const cakeTriggerZone = document.getElementById('cake-trigger-zone');
+        const mainCandleFlame = document.getElementById('main-candle-flame');
+        const cakeInstructionLabel = document.getElementById('cake-instruction-label');
+
+        let cakeCurrentState = 0; // 0 = Unlit, 1 = Lit, 2 = Blown Out Celebration Active
+
+        cakeTriggerZone.addEventListener('click', () => {
+            if (cakeCurrentState === 0) {
+                // Step 1: Light Candle sequence
+                gsap.to(mainCandleFlame, { opacity: 1, scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.3)' });
+                cakeInstructionLabel.innerText = "Now, Blow Out The Candle (Click Again)";
+                cakeCurrentState = 1;
+            } else if (cakeCurrentState === 1) {
+                // Step 2: Extinguish flame & detonate fireworks + confetti parameters
+                gsap.to(mainCandleFlame, { opacity: 0, scale: 0.4, duration: 0.3, ease: 'power2.in' });
+                cakeInstructionLabel.innerText = "Wish Sent To The Stars ✨";
+                
+                // Detonate Confetti Explosion via Library Engine
+                triggerConfettiBlast();
+                cakeCurrentState = 2;
+            }
+        });
+
+        function triggerConfettiBlast() {
+            // Left anchor blast
+            confetti({
+                particleCount: 140,
+                angle: 60,
+                spread: 75,
+                origin: { x: 0, y: 0.8 },
+                colors: ['#b76e79', '#d4af37', '#ffffff', '#fbcbc9']
+            });
+            // Right anchor blast
+            confetti({
+                particleCount: 140,
+                angle: 120,
+                spread: 75,
+                origin: { x: 1, y: 0.8 },
+                colors: ['#b76e79', '#d4af37', '#ffffff', '#fbcbc9']
+            });
+        }
+
+        let lastCelebrationTimestamp = 0;
+        function executeEndingCelebrationSparks() {
+            let currentTimestamp = Date.now();
+            if (currentTimestamp - lastCelebrationTimestamp > 3000) { // Limit execution frequency to optimize render frames
+                lastCelebrationTimestamp = currentTimestamp;
+                
+                let endDuration = 3 * 1000;
+                let animationEnd = Date.now() + endDuration;
+                let defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                function randomInRange(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+                let interval = setInterval(function() {
+                    let timeLeft = animationEnd - Date.now();
+
+                    if (timeLeft <= 0) {
+                        return clearInterval(interval);
+                    }
+
+                    let particleCount = 50 * (timeLeft / endDuration);
+                    // Initialize fireworks elements randomly across space
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+                }, 250);
+            }
+        }
+
+    });
+</script>
+
+```
