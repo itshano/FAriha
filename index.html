@@ -7,47 +7,46 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Poppins:wght@200;300;400;500;600;700&family=Alex+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 :root{
-  --black: #050206;
-  --maroon-deep: #120309;
-  --maroon-glow: #230511;
-  --rose-gold: #b8768a;
-  --rose-gold-light: #e3aebb;
-  --gold: #d6b578;
-  --gold-light: #f2dca8;
-  --white: #f8f4ee;
-  --soft-pink: #f3c9d4;
-  --glass: rgba(248, 244, 238, 0.04);
-  --glass-border: rgba(214, 181, 120, 0.2);
-  --shadow-gold: 0 0 50px rgba(214, 181, 120, 0.15);
+  --black:#08060a;
+  --black-2:#0f0a10;
+  --plum:#1a0f16;
+  --rose-gold:#b8768a;
+  --rose-gold-light:#e3aebb;
+  --gold:#d6b578;
+  --gold-light:#f2dca8;
+  --white:#f8f4ee;
+  --soft-pink:#f3c9d4;
+  --glass:rgba(248,244,238,0.06);
+  --glass-border:rgba(214,181,120,0.25);
+  --shadow-gold: 0 0 40px rgba(214,181,120,0.25);
   --ease: cubic-bezier(.22,1,.36,1);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
-html{background:var(--black); scroll-behavior: smooth;}
+html{background:var(--black);}
 
 body{
-  background: var(--black);
-  color: var(--white);
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
-  cursor: none;
-  min-height: 100vh;
+  background:var(--black);
+  color:var(--white);
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+  min-height:100vh;
 }
 
 @media (max-width: 900px){
-  body{cursor: auto;}
+  body{cursor:auto;}
 }
 
 ::selection{background:var(--rose-gold);color:var(--black);}
 
 h1,h2,h3,.serif{font-family:'Playfair Display',serif;}
-.cursive{font-family: 'Alex Brush', cursive; font-weight: 400;}
 
 a{color:inherit;text-decoration:none;}
 
@@ -60,7 +59,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 ::-webkit-scrollbar-track{background:var(--black);}
 ::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--rose-gold));border-radius:10px;}
 
-/* ================= CUSTOM CURSOR ================= */
+/* ================= CURSOR ================= */
 .cursor-glow{
   position:fixed;
   top:0;left:0;
@@ -77,7 +76,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .cursor-dot{
   position:fixed;
   top:0;left:0;
-  width:6px;height:6px;
+  width:5px;height:5px;
   border-radius:50%;
   background:var(--gold-light);
   pointer-events:none;
@@ -91,102 +90,65 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 }
 .cursor-glow.magnetic{width:56px;height:56px;border-color:var(--rose-gold-light);background:rgba(216,120,143,0.08);}
 
-/* Sparkle trail elements */
-.sparkle-particle {
-  position: fixed;
-  pointer-events: none;
-  width: 4px;
-  height: 4px;
-  background: var(--gold-light);
-  border-radius: 50%;
-  z-index: 9998;
-  opacity: 1;
-}
-
-/* ================= LUXURY BACKGROUNDS ================= */
-.luxury-bg{
+/* ================= AURORA / BG LAYERS ================= */
+.aurora-bg{
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
   overflow:hidden;
   background:
-    radial-gradient(ellipse at 20% 20%, rgba(18, 3, 9, 0.95), transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(35, 5, 17, 0.9), transparent 60%),
-    radial-gradient(ellipse at 50% 80%, rgba(184, 118, 138, 0.08), transparent 70%),
-    linear-gradient(135deg, var(--black) 0%, var(--maroon-deep) 50%, var(--black) 100%);
+    radial-gradient(ellipse at 20% 20%, rgba(184,118,138,0.14), transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(214,181,120,0.12), transparent 55%),
+    radial-gradient(ellipse at 50% 90%, rgba(184,118,138,0.10), transparent 60%),
+    var(--black);
 }
 .aurora-blob{
   position:absolute;
   width:60vw;height:60vw;
   border-radius:50%;
-  filter:blur(110px);
-  opacity:.25;
+  filter:blur(90px);
+  opacity:.35;
   mix-blend-mode:screen;
 }
 .aurora-blob.b1{background:radial-gradient(circle, var(--rose-gold), transparent 65%); top:-20%; left:-15%; animation:driftA 22s ease-in-out infinite;}
 .aurora-blob.b2{background:radial-gradient(circle, var(--gold), transparent 65%); bottom:-25%; right:-10%; animation:driftB 26s ease-in-out infinite;}
+.aurora-blob.b3{background:radial-gradient(circle, var(--soft-pink), transparent 65%); top:40%; left:35%; animation:driftC 30s ease-in-out infinite;}
 
 @keyframes driftA{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(8vw,6vh) scale(1.15);}}
 @keyframes driftB{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-6vw,-8vh) scale(1.1);}}
+@keyframes driftC{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-5vw,7vh) scale(0.9);}}
 
-.stars{position:absolute;inset:0; z-index: 1;}
+.stars{position:absolute;inset:0;}
 .star{position:absolute;background:var(--gold-light);border-radius:50%;opacity:.7;animation:twinkle 3s ease-in-out infinite;}
 @keyframes twinkle{0%,100%{opacity:.15;}50%{opacity:.9;}}
 
-#petalCanvas, #confettiCanvas, #fireworkCanvas{
-  position:fixed;inset:0;pointer-events:none;z-index:5;
-}
-#confettiCanvas, #fireworkCanvas{z-index:40;}
-
-#bgVideo{
-  position:fixed;
-  inset:0;
-  width:100vw;
-  height:100vh;
-  object-fit:cover;
-  z-index:0;
-  opacity:0;
-  transition:opacity 2.5s ease;
-  pointer-events:none;
-}
-
-/* ================= PRELOADER ================= */
+/* ================= LOADER ================= */
 #loader{
   position:fixed;inset:0;z-index:10000;
   background:var(--black);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:24px;
+  gap:28px;
 }
-.loader-logo{
-  font-family: 'Alex Brush', cursive;
-  font-size: 4rem;
-  background: linear-gradient(120deg, var(--gold-light), var(--rose-gold-light));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  opacity: 0;
-  transform: translateY(15px);
+.loader-heart{
+  width:70px;height:70px;position:relative;
 }
-.progress-container{
-  width: 260px;
-  height: 4px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+.loader-heart svg{width:100%;height:100%;}
+.loader-heart path{
+  fill:none;
+  stroke:url(#loaderGrad);
+  stroke-width:2.4;
+  stroke-linecap:round;
+  stroke-dasharray:340;
+  stroke-dashoffset:340;
 }
-.progress-bar{
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--rose-gold), var(--gold), var(--rose-gold-light));
-  background-size: 200% auto;
-  border-radius: 10px;
-  box-shadow: 0 0 15px var(--gold-light);
-  animation: shimmerEffect 2s linear infinite;
-}
-@keyframes shimmerEffect {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+#loader-percent{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,6vw,3.6rem);
+  letter-spacing:2px;
+  font-weight:600;
+  background:linear-gradient(120deg,var(--gold-light),var(--rose-gold-light));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .loader-label{
   font-size:.72rem;
@@ -196,7 +158,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   opacity:.75;
 }
 
-/* ================= INTRO ("Touch the Heart") ================= */
+/* ================= WELCOME ================= */
 #welcome{
   position:fixed;inset:0;z-index:9000;
   background:var(--black);
@@ -218,15 +180,6 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   line-height:1.5;
 }
 .welcome-text .accent{color:var(--rose-gold-light);}
-
-.heart-btn-container {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .heart-btn{
   width:96px;height:96px;
   border-radius:50%;
@@ -238,24 +191,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   color:var(--rose-gold-light);
   opacity:0;
   transform:scale(.7);
-  box-shadow: 0 0 35px rgba(184,118,138,0.3);
+  box-shadow:var(--shadow-gold);
   position:relative;
-  z-index: 2;
-  transition: transform 0.1s ease;
-}
-.heart-btn-container::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(184,118,138,0.2) 0%, transparent 70%);
-  z-index: 1;
-  animation: heartPulseGlow 2s infinite alternate;
-}
-@keyframes heartPulseGlow {
-  0% { transform: scale(0.85); opacity: 0.4; }
-  100% { transform: scale(1.25); opacity: 0.95; }
 }
 .heart-btn::after{
   content:'';
@@ -265,89 +202,43 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   animation:pulseRing 2.4s ease-out infinite;
 }
 @keyframes pulseRing{0%{transform:scale(.85);opacity:.9;}100%{transform:scale(1.5);opacity:0;}}
-.heart-btn i{animation:heartbeat 1.4s ease-in-out infinite;}
-@keyframes heartbeat{0%,100%{transform:scale(1);}25%{transform:scale(1.18);}40%{transform:scale(1);}}
+.heart-btn i{animation:heartbeat 1.6s ease-in-out infinite;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}25%{transform:scale(1.15);}40%{transform:scale(1);}}
 .touch-label{
   font-size:.75rem;letter-spacing:5px;text-transform:uppercase;
   color:var(--gold-light);opacity:0;
 }
 
-/* Ripple on click */
-.ripple-effect {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(214, 181, 120, 0.4);
-  transform: scale(0);
-  animation: rippleAnimation 0.8s ease-out;
-  pointer-events: none;
-  z-index: 99;
-}
-@keyframes rippleAnimation {
-  to { transform: scale(4); opacity: 0; }
-}
-
-/* ================= PRIVATE VAULT UNLOCK (SPLIT DOOR) ================= */
+/* ================= PASSWORD MODAL ================= */
 #passwordModal{
   position:fixed;inset:0;z-index:9500;
+  background:rgba(8,6,10,0.95);
+  backdrop-filter:blur(25px);
   display:flex;align-items:center;justify-content:center;
-  pointer-events: none;
+  opacity:0;visibility:hidden;
+  transition:opacity 0.6s var(--ease), visibility 0.6s var(--ease);
+  padding:24px;
 }
-.vault-door-left, .vault-door-right {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(to bottom, #11040a, #070104);
-  z-index: 1;
-  transition: transform 1.6s cubic-bezier(0.77, 0, 0.175, 1);
-  pointer-events: auto;
-  border-right: 1px solid rgba(214,181,120,0.15);
-}
-.vault-door-left { left: 0; transform-origin: left center;}
-.vault-door-right { right: 0; transform-origin: right center; border-left: 1px solid rgba(214,181,120,0.15); border-right: none;}
-
-#passwordModal.active .vault-door-left,
-#passwordModal.active .vault-door-right {
-  pointer-events: auto;
-}
-#passwordModal.unlocked .vault-door-left {
-  transform: translateX(-100%) rotateY(-20deg);
-}
-#passwordModal.unlocked .vault-door-right {
-  transform: translateX(100%) rotateY(20deg);
-}
-
+#passwordModal.active{opacity:1;visibility:visible;}
 .password-box{
-  position: relative;
-  z-index: 2;
   max-width:400px;
   width:100%;
   padding:40px 30px;
-  background: linear-gradient(160deg, rgba(24, 8, 16, 0.95), rgba(10, 2, 6, 0.98));
+  background:linear-gradient(160deg, rgba(248,244,238,0.06), rgba(248,244,238,0.02));
   border:1px solid var(--glass-border);
   border-radius:24px;
   text-align:center;
   box-shadow:0 30px 60px rgba(0,0,0,0.8), var(--shadow-gold);
   transform:scale(0.9);
-  opacity: 0;
-  transition:transform 0.6s var(--ease), opacity 0.6s var(--ease);
-  pointer-events: auto;
+  transition:transform 0.6s var(--ease);
 }
-#passwordModal.active .password-box{transform:scale(1); opacity: 1;}
-#passwordModal.unlocked .password-box{
-  transform: scale(0.85);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 0.6s ease, opacity 0.5s ease;
-}
-
+#passwordModal.active .password-box{transform:scale(1);}
 .password-title{
   font-family:'Playfair Display',serif;
   font-size:1.8rem;
   color:var(--white);
   margin-bottom:12px;
   font-weight:600;
-  letter-spacing: 1px;
 }
 .password-desc{
   font-size:0.85rem;
@@ -362,7 +253,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .password-input-wrap input{
   width:100%;
   padding:16px 24px;
-  background:rgba(0,0,0,0.5);
+  background:rgba(0,0,0,0.4);
   border:1px solid var(--glass-border);
   border-radius:12px;
   color:var(--white);
@@ -442,7 +333,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   text-transform:uppercase;
   color:var(--gold-light);
   margin-bottom:20px;
-  opacity:0;
+  opacity:.9;
 }
 .hero-title{
   font-family:'Playfair Display',serif;
@@ -451,12 +342,6 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   line-height:1.05;
   color:var(--white);
   text-shadow:0 0 60px rgba(214,181,120,0.25);
-  overflow: hidden;
-}
-.hero-title .char {
-  display: inline-block;
-  transform: translateY(100%);
-  opacity: 0;
 }
 .hero-name{
   display:block;
@@ -475,12 +360,10 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   letter-spacing:1px;
   max-width:560px;
   margin-left:auto;margin-right:auto;
-  opacity:0;
 }
 .hero-glass-row{
   display:flex;gap:18px;justify-content:center;flex-wrap:wrap;
   margin-top:50px;
-  opacity:0;
 }
 .glass-chip{
   padding:14px 26px;
@@ -504,81 +387,41 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .scroll-cue .line{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:scrollLine 2s ease-in-out infinite;}
 @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
 
-/* ================= ENVELOPE / LOVE LETTER ================= */
-#letter{padding-top:100px;padding-bottom:100px;}
+/* floating hearts / petals canvas & background video styles */
+#petalCanvas, #confettiCanvas, #fireworkCanvas{
+  position:fixed;inset:0;pointer-events:none;z-index:5;
+}
+#confettiCanvas, #fireworkCanvas{z-index:40;}
 
-.envelope-wrapper {
-  max-width: 760px;
-  margin: 0 auto;
-  perspective: 1500px;
-}
-.envelope {
-  position: relative;
-  width: 100%;
-  height: 480px;
-  background: linear-gradient(135deg, #1c0812, #0d0208);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.6), var(--shadow-gold);
-  cursor: pointer;
-  transition: transform 0.5s ease;
-}
-.envelope-flap {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 50%;
-  background: linear-gradient(to bottom, #230b17, #13040b);
-  border-bottom: 2px solid var(--gold);
-  border-radius: 12px 12px 0 0;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  transform-origin: top center;
-  z-index: 3;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.envelope.open .envelope-flap {
-  transform: rotateX(180deg);
-  z-index: 1;
-}
-.envelope-pocket {
-  position: absolute;
-  bottom: 0; left: 0; width: 100%; height: 100%;
-  background: transparent;
-  border-radius: 0 0 12px 12px;
-  clip-path: polygon(0 40%, 100% 40%, 100% 100%, 0 100%);
-  z-index: 2;
-}
-.envelope-pocket::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #16060e, #090105);
-  clip-path: polygon(0 40%, 50% 80%, 100% 40%, 100% 100%, 0 100%);
-  border-top: 1px solid rgba(214, 181, 120, 0.25);
+#bgVideo{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  z-index:0;
+  opacity:0;
+  transition:opacity 2s ease;
+  pointer-events:none;
 }
 
+/* ================= LOVE LETTER ================= */
+#letter{padding-top:60px;padding-bottom:60px;}
 .letter-paper{
-  position: absolute;
-  top: 10%; left: 5%; width: 90%; height: 80%;
-  padding:clamp(24px,4vw,48px);
-  background:linear-gradient(160deg, rgba(28, 8, 16, 0.98), rgba(13, 2, 7, 0.99));
+  max-width:760px;
+  margin:0 auto;
+  padding:clamp(36px,6vw,72px);
+  background:linear-gradient(160deg, rgba(248,244,238,0.05), rgba(248,244,238,0.02));
   border:1px solid var(--glass-border);
-  border-radius:8px;
-  z-index: 1;
-  transform: translateY(0);
-  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), z-index 1s ease;
-  overflow-y: auto;
-}
-.envelope.open .letter-paper {
-  transform: translateY(-40%) scale(1.02);
-  height: auto;
-  min-height: 480px;
-  z-index: 4;
-  position: relative;
-  left: 0; width: 100%;
+  border-radius:6px;
+  backdrop-filter:blur(16px);
+  position:relative;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,0.6), var(--shadow-gold);
 }
 .letter-paper::before{
   content:'';
-  position:absolute;top:15px;left:15px;right:15px;bottom:15px;
-  border:1px solid rgba(214,181,120,0.15);
+  position:absolute;top:22px;left:22px;right:22px;bottom:22px;
+  border:1px solid rgba(214,181,120,0.18);
   pointer-events:none;
 }
 .letter-mark{
@@ -587,19 +430,21 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   font-size:1rem;
   color:var(--gold-light);
   text-align:center;
-  margin-bottom:24px;
+  margin-bottom:30px;
   letter-spacing:2px;
 }
 .letter-heading{
-  font-size:clamp(1.8rem,3.4vw,2.4rem);
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,3.4vw,2.2rem);
   text-align:center;
-  margin-bottom:30px;
+  margin-bottom:34px;
   color:var(--white);
 }
 #letterText{
-  font-size:clamp(0.9rem,1.8vw,1.05rem);
-  line-height:2;
-  color:rgba(248, 244, 238, 0.9);
+  font-family:'Playfair Display',serif;
+  font-size:clamp(0.95rem,1.9vw,1.1rem);
+  line-height:1.9;
+  color:var(--white);
   white-space:pre-wrap;
 }
 #letterText .cursor-blink{
@@ -611,221 +456,140 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .letter-sign{
   margin-top:36px;
   text-align:right;
+  font-family:'Playfair Display',serif;
   font-style:italic;
-  font-size:1.4rem;
+  font-size:1.2rem;
   color:var(--rose-gold-light);
   opacity:0;
 }
 
-/* ================= GALLERY (POLAROID 3D TILT) ================= */
+/* ================= GALLERY ================= */
 #gallery{padding-top:40px;}
 .gallery-head{text-align:center;margin-bottom:60px;padding:0 6vw;}
 .gallery-title{font-size:clamp(2rem,5vw,3.4rem);}
 .gallery-title .italic{font-style:italic;color:var(--rose-gold-light);}
 .gallery-track-wrap{
   overflow:hidden;
-  padding:40px 0 80px;
+  padding:20px 0 60px;
 }
 .gallery-track{
   display:flex;
-  gap:35px;
+  gap:26px;
   width:max-content;
   padding:0 6vw;
 }
-
-/* Polaroid Container */
 .gcard{
   position:relative;
-  width: 280px;
-  height: 360px;
-  background: #fbf9f5;
-  padding: 16px 16px 50px 16px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  border-radius: 4px;
+  width:min(64vw,320px);
+  height:420px;
+  border-radius:18px;
+  overflow:hidden;
   flex-shrink:0;
-  cursor: pointer;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  color: #1a1518;
-}
-
-/* Polaroids slightly rotated initially */
-.gcard:nth-child(even) { transform: rotate(3deg); }
-.gcard:nth-child(odd) { transform: rotate(-3deg); }
-
-.gcard-img-wrap{
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  background: #151515;
-  border: 1px solid rgba(0,0,0,0.05);
+  border:1px solid var(--glass-border);
+  background:linear-gradient(150deg, rgba(184,118,138,0.18), rgba(214,181,120,0.10));
 }
 .gcard .ph{
   position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
   flex-direction:column;gap:14px;
-  color:rgba(255, 255, 255, 0.4);
-  background: linear-gradient(135deg, #2b111a, #0d0207);
+  color:var(--gold-light);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.08), transparent 60%),
+    linear-gradient(160deg, rgba(184,118,138,0.25), rgba(8,6,10,0.55));
+  z-index: 0;
 }
 .gcard .ph i{font-size:2.2rem;opacity:.55;}
 .gcard .ph span{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;opacity:.55;}
-
-.gcard img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+.gcard .gloss{
+  position:absolute;inset:0;
+  background:linear-gradient(200deg, rgba(255,255,255,0.12), transparent 45%);
+  mix-blend-mode:overlay;
 }
 .gcard .cap{
-  position:absolute;bottom:12px;left:0;right:0;
-  text-align: center;
-  font-size: 1.4rem;
-  color: #35252b;
+  position:absolute;bottom:0;left:0;right:0;
+  padding:20px 22px;
+  background:linear-gradient(0deg, rgba(8,6,10,0.85), transparent);
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:1rem;
+  color:var(--white);
 }
 
-/* --- LIGHTBOX MODAL --- */
-#lightboxModal{
-  position: fixed; inset: 0;
-  background: rgba(5,2,6,0.95);
-  backdrop-filter: blur(15px);
-  z-index: 11000;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; visibility: hidden;
-  transition: opacity 0.5s var(--ease), visibility 0.5s var(--ease);
-}
-#lightboxModal.active { opacity: 1; visibility: visible;}
-.lightbox-content{
-  position: relative;
-  max-width: 90vw; max-height: 85vh;
-  transform: scale(0.9);
-  transition: transform 0.5s var(--ease);
-}
-#lightboxModal.active .lightbox-content { transform: scale(1); }
-.lightbox-content img {
-  max-width: 100%; max-height: 80vh;
-  border: 10px solid #fbf9f5;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-  border-radius: 4px;
-}
-.lightbox-close{
-  position: absolute; top: -45px; right: 0;
-  font-size: 1.8rem; color: var(--white); cursor: pointer;
-}
-
-/* ================= REASONS (CAROUSEL / SCROLL-SNAP) ================= */
+/* ================= REASONS ================= */
 #reasons{padding-top:20px;}
-.reasons-carousel-container {
-  width: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  display: flex;
-  gap: 30px;
-  padding: 40px 6vw 60px;
-  scroll-behavior: smooth;
+.reasons-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+  gap:22px;
+  margin-top:60px;
 }
-.reasons-carousel-container::-webkit-scrollbar { display: none; }
-
 .rcard{
-  flex: 0 0 300px;
-  scroll-snap-align: center;
-  padding:40px 30px;
-  border-radius:24px;
+  padding:32px 26px;
+  border-radius:16px;
   background:var(--glass);
   border:1px solid var(--glass-border);
   backdrop-filter:blur(12px);
   position:relative;
   overflow:hidden;
-  transform: scale(0.9);
-  opacity: 0.5;
-  transition: transform 0.5s var(--ease), opacity 0.5s var(--ease);
-}
-.rcard.active-card {
-  transform: scale(1.02);
-  opacity: 1;
-  box-shadow: var(--shadow-gold);
 }
 .rcard::before{
   content:'';
   position:absolute;top:-40%;right:-40%;
   width:80%;height:80%;
-  background:radial-gradient(circle, rgba(214,181,120,0.12), transparent 70%);
+  background:radial-gradient(circle, rgba(214,181,120,0.18), transparent 70%);
 }
 .rcard i{
-  font-size:2rem;
+  font-size:1.6rem;
   color:var(--gold-light);
-  margin-bottom:24px;
+  margin-bottom:18px;
   display:block;
 }
 .rcard h3{
-  font-size:1.3rem;
-  margin-bottom:12px;
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;
+  margin-bottom:10px;
   font-weight:600;
-  letter-spacing: 0.5px;
 }
 .rcard p{
-  font-size:.9rem;
-  line-height:1.7;
+  font-size:.88rem;
+  line-height:1.6;
   color:rgba(248,244,238,0.75);
   font-weight:300;
 }
 .rcard .num{
-  position:absolute;top:22px;right:26px;
+  position:absolute;top:18px;right:22px;
+  font-family:'Playfair Display',serif;
   font-style:italic;
-  color:rgba(214,181,120,0.25);
-  font-size:1rem;
+  color:rgba(214,181,120,0.35);
+  font-size:.9rem;
 }
 
 /* ================= TIMELINE ================= */
 #timeline{padding-top:20px;}
 .tl-wrap{position:relative;margin-top:70px;padding-left:34px;}
-
-/* Timeline Spine Background Line */
 .tl-wrap::before{
   content:'';
-  position:absolute;left:6px;top:0;bottom:0;width:2px;
-  background: rgba(214, 181, 120, 0.15);
+  position:absolute;left:6px;top:0;bottom:0;width:1px;
+  background:linear-gradient(var(--gold), var(--rose-gold), transparent);
 }
-
-/* Active Progress Line that Grows on Scroll */
-.tl-progress-line {
-  position: absolute;
-  left: 6px; top: 0; width: 2px;
-  background: linear-gradient(to bottom, var(--gold), var(--rose-gold));
-  height: 0%;
-  box-shadow: 0 0 10px var(--rose-gold);
-}
-
 .tl-item{
   position:relative;
   padding-bottom:64px;
   padding-left:34px;
-  opacity: 0;
-  transform: translateX(-40px) scale(0.9);
-  transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.tl-item.tl-visible {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-}
+.tl-item:last-child{padding-bottom:0;}
 .tl-dot{
   position:absolute;left:-34px;top:2px;
-  width:14px;height:14px;border-radius:50%;
+  width:13px;height:13px;border-radius:50%;
   background:var(--gold-light);
   box-shadow:0 0 16px rgba(214,181,120,0.7);
-  transform:translateX(-6px) scale(0);
-  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.5) 0.3s;
-}
-.tl-item.tl-visible .tl-dot {
-  transform: translateX(-6px) scale(1);
+  transform:translateX(-6px);
 }
 .tl-year{
   font-size:.72rem;letter-spacing:3px;text-transform:uppercase;
   color:var(--rose-gold-light);margin-bottom:8px;
 }
-.tl-title{font-size:1.45rem;margin-bottom:8px;}
+.tl-title{font-family:'Playfair Display',serif;font-size:1.35rem;margin-bottom:8px;}
 .tl-desc{font-size:.92rem;color:rgba(248,244,238,0.72);font-weight:300;line-height:1.7;max-width:560px;}
 
 /* ================= CAKE ================= */
@@ -852,12 +616,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   opacity:0;
 }
 .flame.lit{
-  animation:flicker 0.6s ease-in-out infinite alternate;
+  animation:flicker 0.5s ease-in-out infinite alternate;
   opacity:1;
 }
 @keyframes flicker{
-  0%{transform:scaleY(1) scaleX(1) rotate(-3deg); filter: drop-shadow(0 0 5px orange);}
-  100%{transform:scaleY(1.2) scaleX(0.85) rotate(3deg); filter: drop-shadow(0 0 15px gold);}
+  0%{transform:scaleY(1) scaleX(1) rotate(-2deg);}
+  100%{transform:scaleY(1.15) scaleX(0.9) rotate(2deg);}
 }
 
 /* ================= ENDING ================= */
@@ -869,7 +633,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   position:relative;
 }
 .end-line1{
-  font-style:italic;
+  font-family:'Playfair Display',serif;font-style:italic;
   font-size:clamp(2.6rem,9vw,6rem);
   background:linear-gradient(120deg,var(--rose-gold-light),var(--gold-light));
   -webkit-background-clip:text;background-clip:text;color:transparent;
@@ -877,6 +641,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 }
 .end-line2{
   margin-top:26px;
+  font-family:'Playfair Display',serif;
   font-size:clamp(1.4rem,4vw,2.2rem);
   color:var(--white);
 }
@@ -888,7 +653,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 }
 .end-signature{
   margin-top:14px;
-  font-style:italic;
+  font-family:'Playfair Display',serif;font-style:italic;
   font-size:clamp(1.6rem,4vw,2.4rem);
   color:var(--gold-light);
 }
@@ -899,8 +664,6 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   bottom:28px;right:28px;
   z-index:500;
   display:flex;align-items:center;gap:10px;
-  opacity: 0;
-  transition: opacity 1s ease;
 }
 .music-btn{
   width:54px;height:54px;border-radius:50%;
@@ -937,16 +700,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
 @media (max-width: 640px){
   .section-inner{padding:100px 6vw;}
-  .gcard{width:240px;height:310px; padding: 12px 12px 40px 12px;}
-  .gcard .cap { font-size: 1.1rem; bottom: 8px;}
-  .letter-paper{padding:24px 18px;}
+  .gcard{width:78vw;height:380px;}
+  .letter-paper{padding:30px 22px;}
 }
 </style>
 </head>
 <body>
-
-<!-- SOUND OBJECTS -->
-<audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav" preload="auto"></audio>
 
 <!-- CURSOR -->
 <div class="cursor-glow" id="cursorGlow"></div>
@@ -957,10 +716,11 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <source src="music/video.mp4" type="video/mp4">
 </video>
 
-<!-- LUXURY BACKGROUND -->
-<div class="luxury-bg">
+<!-- BACKGROUND -->
+<div class="aurora-bg">
   <div class="aurora-blob b1"></div>
   <div class="aurora-blob b2"></div>
+  <div class="aurora-blob b3"></div>
   <div class="stars" id="starsField"></div>
 </div>
 
@@ -968,31 +728,35 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 <canvas id="confettiCanvas"></canvas>
 <canvas id="fireworkCanvas"></canvas>
 
-<!-- 1. PRELOADER -->
+<!-- LOADER -->
 <div id="loader">
-  <div class="loader-logo">For FAriha</div>
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
+  <div class="loader-heart">
+    <svg viewBox="0 0 100 100">
+      <defs>
+        <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f2dca8"/>
+          <stop offset="100%" stop-color="#e3aebb"/>
+        </linearGradient>
+      </defs>
+      <path id="loaderPath" d="M50 85 C20 65 5 45 5 28 C5 12 18 3 32 3 C42 3 48 10 50 16 C52 10 58 3 68 3 C82 3 95 12 95 28 C95 45 80 65 50 85 Z"/>
+    </svg>
   </div>
-  <div class="loader-label">Constructing Luxury Experience</div>
+  <div id="loader-percent">0%</div>
+  <div class="loader-label">Preparing something special</div>
 </div>
 
-<!-- 2. WELCOME (Touch the Heart) -->
+<!-- WELCOME -->
 <div id="welcome">
   <div class="welcome-text">Someone made something <span class="accent">special</span><br>only for you<span class="accent">...</span></div>
-  <div class="heart-btn-container">
-    <button class="heart-btn" id="heartBtn" aria-label="Enter"><i class="fa-solid fa-heart"></i></button>
-  </div>
+  <button class="heart-btn" id="heartBtn" aria-label="Enter"><i class="fa-solid fa-heart"></i></button>
   <div class="touch-label" id="touchLabel">Touch the Heart</div>
 </div>
 
-<!-- 3. PRIVATE VAULT UNLOCK -->
+<!-- PASSWORD MODAL -->
 <div id="passwordModal">
-  <div class="vault-door-left"></div>
-  <div class="vault-door-right"></div>
   <div class="password-box">
     <div class="password-title">Private Vault</div>
-    <div class="password-desc">Unlock using our key to reveal of us</div>
+    <div class="password-desc">Please enter the secret key to unlock</div>
     <div class="password-input-wrap">
       <input type="password" id="passInput" placeholder="Enter password" maxlength="20">
       <div class="error-msg" id="errorMsg"></div>
@@ -1001,16 +765,16 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   </div>
 </div>
 
-<!-- MAIN SITE CORE -->
+<!-- MAIN -->
 <div id="main">
 
-  <!-- 4. HERO SECTION -->
+  <!-- HERO -->
   <section id="hero" class="section">
     <div class="hero-inner">
-      <div class="hero-kicker">15th of July</div>
-      <h1 class="hero-title" id="heroTitle">Happy Birthday<span class="hero-name cursive">FAriha</span></h1>
-      <p class="hero-sub">A quiet little corner of the internet, built just to say — the world is brighter with you in it.</p>
-      <div class="hero-glass-row">
+      <div class="hero-kicker reveal">15th of July</div>
+      <h1 class="hero-title reveal">Happy Birthday<span class="hero-name">FAriha</span></h1>
+      <p class="hero-sub reveal">A quiet little corner of the internet, built just to say — the world is brighter with you in it.</p>
+      <div class="hero-glass-row reveal">
         <div class="glass-chip"><i class="fa-solid fa-champagne-glasses"></i> Since forever, yours</div>
         <div class="glass-chip"><i class="fa-solid fa-heart"></i> Made with love by Shano</div>
       </div>
@@ -1018,69 +782,53 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="scroll-cue"><span>Scroll</span><div class="line"></div></div>
   </section>
 
-  <!-- 5. LUXURY LOVE LETTER -->
+  <!-- LOVE LETTER -->
   <section id="letter" class="section">
     <div class="section-inner">
-      <div class="envelope-wrapper">
-        <div class="envelope" id="letterEnvelope">
-          <div class="envelope-flap"></div>
-          <div class="envelope-pocket"></div>
-          <div class="letter-paper">
-            <div class="letter-mark cursive">From Shano, With Love</div>
-            <h2 class="letter-heading serif">My Dearest FAriha,</h2>
-            <div id="letterText"></div>
-            <div class="letter-sign cursive" id="letterSign">Forever yours, Shano</div>
-          </div>
-        </div>
+      <div class="letter-paper">
+        <div class="letter-mark">— A Letter For You —</div>
+        <h2 class="letter-heading">My Dearest FAriha</h2>
+        <div id="letterText"></div>
+        <div class="letter-sign" id="letterSign">Forever yours, Shano</div>
       </div>
     </div>
   </section>
 
-  <!-- 6. MEMORY GALLERY -->
+  <!-- GALLERY -->
   <section id="gallery" class="section">
     <div class="gallery-head">
       <div class="eyebrow" style="justify-content:center;">Our Moments</div>
-      <h2 class="gallery-title serif">A Little <span class="italic font-display">Gallery</span> of Us</h2>
+      <h2 class="gallery-title serif">A Little <span class="italic">Gallery</span> of Us</h2>
     </div>
     <div class="gallery-track-wrap">
       <div class="gallery-track" id="galleryTrack">
-        <!-- Generated by JS -->
+        <!-- 8 cards generated by JS with updated .jpeg sources -->
       </div>
     </div>
   </section>
 
-  <!-- LIGHTBOX -->
-  <div id="lightboxModal">
-    <div class="lightbox-content">
-      <span class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></span>
-      <img src="" id="lightboxImg" alt="Enlarged Memory">
-    </div>
-  </div>
-
-  <!-- 7. REASONS WHY -->
+  <!-- REASONS -->
   <section id="reasons" class="section">
     <div class="section-inner">
       <div class="eyebrow">Just a Few of Many</div>
-      <h2 class="gallery-title serif">Reasons Why I <span class="italic rose-text cursive">Love</span> You</h2>
-      <div class="reasons-carousel-container" id="reasonsCarousel"></div>
+      <h2 class="gallery-title serif">Reasons Why I <span class="italic rose-text">Love</span> You</h2>
+      <div class="reasons-grid" id="reasonsGrid"></div>
     </div>
   </section>
 
-  <!-- 8. STORY TIMELINE -->
+  <!-- TIMELINE -->
   <section id="timeline" class="section">
     <div class="section-inner">
       <div class="eyebrow">Our Story</div>
-      <h2 class="gallery-title serif">How We <span class="italic font-display">Got Here</span></h2>
-      <div class="tl-wrap" id="tlWrap">
-        <div class="tl-progress-line" id="tlProgressLine"></div>
-      </div>
+      <h2 class="gallery-title serif">How We <span class="italic">Got Here</span></h2>
+      <div class="tl-wrap" id="tlWrap"></div>
     </div>
   </section>
 
-  <!-- 9. INTERACTIVE CAKE -->
+  <!-- CAKE -->
   <section id="cakeSection" class="section">
     <div class="eyebrow" style="justify-content:center;">Make a Wish</div>
-    <h2 class="gallery-title serif" style="margin-bottom:10px;">Light the <span class="italic rose-text cursive">Candles</span></h2>
+    <h2 class="gallery-title serif" style="margin-bottom:10px;">Light the <span class="italic rose-text">Candles</span></h2>
     <div class="cake-wrap" id="cakeWrap">
       <svg class="cake-svg" viewBox="0 0 280 220">
         <defs>
@@ -1117,18 +865,18 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="cake-hint" id="cakeHint">Tap the cake to light the candles</div>
   </section>
 
-  <!-- 10. ENDING -->
+  <!-- ENDING -->
   <section id="ending" class="section">
-    <div class="end-line1 reveal cursive">I Love You</div>
-    <div class="end-line2 reveal">Happy Birthday, Again <span class="name font-display">FAriha</span> <i class="fa-solid fa-heart rose-text"></i></div>
+    <div class="end-line1 reveal">I Love You</div>
+    <div class="end-line2 reveal">Happy Birthday, Again <span class="name">FAriha</span> <i class="fa-solid fa-heart rose-text"></i></div>
     <div class="end-from reveal">Forever Yours</div>
-    <div class="end-signature reveal cursive">Shano</div>
+    <div class="end-signature reveal">Shano</div>
   </section>
 
   <div class="footer-note">made with care, one line of code at a time — for FAriha</div>
 </div>
 
-<!-- MUSIC MODULE -->
+<!-- MUSIC WIDGET -->
 <div id="musicWidget">
   <button class="music-btn" id="musicToggle" aria-label="Play music">
     <div class="bars"></div>
@@ -1151,43 +899,23 @@ gsap.registerPlugin(ScrollTrigger);
 /* ============ LENIS SMOOTH SCROLL ============ */
 let lenis;
 try{
-  lenis = new Lenis({ duration: 1.25, easing: t => 1 - Math.pow(1 - t, 4), smoothWheel:true });
+  lenis = new Lenis({ duration: 1.15, easing: t => 1 - Math.pow(1 - t, 3), smoothWheel:true });
   function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time)=>{ lenis.raf(time*1000); });
   gsap.ticker.lagSmoothing(0);
-}catch(e){ console.warn('Lenis unavailable'); }
+}catch(e){ console.warn('Lenis unavailable, using native scroll'); }
 
-/* ============ CUSTOM CURSOR & TRAIL ============ */
+/* ============ CURSOR ============ */
 const cursorGlow = document.getElementById('cursorGlow');
 const cursorDot = document.getElementById('cursorDot');
 let mouseX=0, mouseY=0, glowX=0, glowY=0;
-
 window.addEventListener('mousemove', e=>{
   mouseX = e.clientX; mouseY = e.clientY;
   cursorDot.style.left = mouseX+'px';
   cursorDot.style.top = mouseY+'px';
-
-  // Spawn sparkle trail with random dynamics
-  if (Math.random() < 0.2) {
-    const sparkle = document.createElement('div');
-    sparkle.className = 'sparkle-particle';
-    sparkle.style.left = mouseX + 'px';
-    sparkle.style.top = mouseY + 'px';
-    document.body.appendChild(sparkle);
-
-    gsap.to(sparkle, {
-      x: (Math.random() - 0.5) * 40,
-      y: (Math.random() - 0.5) * 40,
-      opacity: 0,
-      scale: Math.random() * 2,
-      duration: 0.8 + Math.random() * 0.4,
-      onComplete: () => sparkle.remove()
-    });
-  }
 });
-
 function animateGlow(){
   glowX += (mouseX-glowX)*0.15;
   glowY += (mouseY-glowY)*0.15;
@@ -1196,21 +924,17 @@ function animateGlow(){
   requestAnimationFrame(animateGlow);
 }
 animateGlow();
-
-function bindMagneticButtons() {
-  document.querySelectorAll('button, .gcard, .rcard, .cake-wrap, .envelope').forEach(el=>{
-    el.addEventListener('mouseenter', ()=>cursorGlow.classList.add('magnetic'));
-    el.addEventListener('mouseleave', ()=>cursorGlow.classList.remove('magnetic'));
-  });
-}
-bindMagneticButtons();
+document.querySelectorAll('button, .gcard, .rcard, .cake-wrap').forEach(el=>{
+  el.addEventListener('mouseenter', ()=>cursorGlow.classList.add('magnetic'));
+  el.addEventListener('mouseleave', ()=>cursorGlow.classList.remove('magnetic'));
+});
 
 /* ============ STARS ============ */
 const starsField = document.getElementById('starsField');
-for(let i=0;i<90;i++){
+for(let i=0;i<80;i++){
   const s = document.createElement('div');
   s.className='star';
-  const size = Math.random()*2+0.8;
+  const size = Math.random()*2+0.6;
   s.style.width = size+'px';
   s.style.height = size+'px';
   s.style.left = Math.random()*100+'%';
@@ -1220,42 +944,19 @@ for(let i=0;i<90;i++){
   starsField.appendChild(s);
 }
 
-/* ============ PRELOADER (GOLD PROGRESS BAR) ============ */
-const progressBar = document.getElementById('progressBar');
+/* ============ LOADER SEQUENCE ============ */
+const loaderPath = document.getElementById('loaderPath');
+const loaderPercent = document.getElementById('loader-percent');
 let loadObj = {val:0};
 
-// Soft background particle fade-in inside loader
-for(let i=0; i<15; i++) {
-  const p = document.createElement('div');
-  p.style.position = 'absolute';
-  p.style.width = Math.random()*6+2 + 'px';
-  p.style.height = p.style.width;
-  p.style.background = 'var(--gold-light)';
-  p.style.borderRadius = '50%';
-  p.style.left = Math.random()*100 + '%';
-  p.style.top = Math.random()*100 + '%';
-  p.style.opacity = 0;
-  p.style.filter = 'blur(1px)';
-  document.getElementById('loader').appendChild(p);
-
-  gsap.to(p, {
-    opacity: Math.random()*0.4 + 0.1,
-    y: '-=40',
-    repeat: -1,
-    yoyo: true,
-    duration: 2 + Math.random()*2,
-    delay: Math.random()*2
-  });
-}
-
-gsap.to('.loader-logo', {opacity: 1, y: 0, duration: 1.4, ease: 'power3.out', delay: 0.2});
+gsap.set(loaderPath, {strokeDashoffset:340});
 
 gsap.to(loadObj, {
   val:100,
-  duration:2.8,
-  ease:'power3.inOut',
+  duration:2.6,
+  ease:'power2.inOut',
   onUpdate:()=>{
-    progressBar.style.width = loadObj.val+'%';
+    loaderPercent.textContent = Math.floor(loadObj.val)+'%';
   },
   onComplete:()=>{
     const tl = gsap.timeline({
@@ -1267,6 +968,7 @@ gsap.to(loadObj, {
     tl.to('#loader', {opacity:0, duration:0.8, ease:'power2.inOut'});
   }
 });
+gsap.to(loaderPath, {strokeDashoffset:0, duration:2.6, ease:'power2.inOut'});
 
 /* ============ WELCOME SEQUENCE ============ */
 function showWelcome(){
@@ -1274,30 +976,13 @@ function showWelcome(){
   welcome.classList.add('active');
   const tl = gsap.timeline();
   tl.from('.welcome-text', {opacity:0, y:24, duration:1.2, ease:'power3.out'})
-    .to('#heartBtn', {opacity:1, scale:1, duration:0.8, ease:'back.out(1.7)'}, '+=1.2')
+    .to('#heartBtn', {opacity:1, scale:1, duration:0.8, ease:'back.out(1.7)'}, '+=2.6')
     .to('#touchLabel', {opacity:.85, duration:0.6}, '-=0.4');
 }
 
-// Click heart with elastic ripple
-document.getElementById('heartBtn').addEventListener('click', function(e) {
-  // Spawn elastic ripple
-  const rect = this.getBoundingClientRect();
-  const ripple = document.createElement('span');
-  ripple.className = 'ripple-effect';
-  ripple.style.left = (e.clientX - rect.left) + 'px';
-  ripple.style.top = (e.clientY - rect.top) + 'px';
-  this.appendChild(ripple);
-  
-  // Back/elastic scale effect on click
-  gsap.fromTo(this, {scale: 1}, {scale: 1.3, duration: 0.4, ease: 'back.out(2.5)', onComplete: () => {
-    gsap.to(this, {scale: 1, duration: 0.3, ease: 'power2.out', onComplete: () => {
-      ripple.remove();
-      triggerPasswordModal();
-    }});
-  }});
-});
+document.getElementById('heartBtn').addEventListener('click', triggerPasswordModal);
 
-/* ============ PASSWORD VAULT SPLIT DOOR ============ */
+/* ============ PASSWORD CHECK MODULE ============ */
 function triggerPasswordModal(){
   gsap.to('#welcome', {opacity:0, duration:0.6, onComplete:()=>{
     document.getElementById('welcome').style.display='none';
@@ -1322,17 +1007,11 @@ function checkPassword() {
   if (formattedInput === correctTarget || formattedInput === 'fariha') {
     errorElement.style.opacity = 0;
     
-    // Play unlock sound[cite: 1]
-    const clickSfx = document.getElementById('clickSound');
-    if(clickSfx) clickSfx.play().catch(()=>{});
-
-    // Vault Door split animation
-    document.getElementById('passwordModal').classList.add('unlocked');
-    
     // Smooth transition to main experience
-    gsap.delayedCall(0.8, () => {
+    gsap.to('#passwordModal', {opacity:0, scale:1.05, duration:0.8, ease:'power2.inOut', onComplete:()=>{
+      document.getElementById('passwordModal').style.display='none';
       enterSite();
-    });
+    }});
   } else {
     errorElement.textContent = "That's not the secret code, try again ❤️";
     errorElement.style.opacity = 1;
@@ -1351,53 +1030,21 @@ function enterSite(){
   const video = document.getElementById('bgVideo');
   if(video){
     video.play().then(()=>{
-      gsap.to(video, {opacity: 0.25, duration: 2.5});
-    }).catch(err => console.log("Video missing or blocked", err));
+      gsap.to(video, {opacity: 0.35, duration: 2.5});
+    }).catch(err => console.log("Video autoplay blocked or file missing:", err));
   }
-
-  // Fade in music controllers
-  gsap.to('#musicWidget', {opacity: 1, duration: 1.5, ease: 'power2.out'});
 
   const tl = gsap.timeline({
     onComplete:()=>{
       initScrollAnimations();
     }
   });
-  
-  tl.to('#main', {opacity:1, duration:0.5})
-    .to('#passwordModal', {display: 'none'})
-    .fromTo('#hero .hero-kicker', {opacity:0, y:25}, {opacity:1, y:0, duration:0.8})
-    .to('.hero-title .char', {
-      opacity: 1,
-      y: 0,
-      stagger: 0.05,
-      duration: 1.2,
-      ease: 'power4.out'
-    }, '-=0.5')
-    .fromTo('#hero .hero-sub', {opacity: 0, y: 25}, {opacity:1, y:0, duration:0.8}, '-=0.8')
-    .fromTo('#hero .hero-glass-row', {opacity:0, y:20}, {opacity:1, y:0, duration:0.8}, '-=0.6');
+  tl.to('#main', {opacity:1, duration:1.2, ease:'power2.out'})
+    .from('#hero .hero-kicker', {opacity:0, y:20, duration:0.8}, '-=0.6')
+    .from('#hero .hero-title', {opacity:0, y:40, duration:1, ease:'power3.out'}, '-=0.6')
+    .from('#hero .hero-sub', {opacity:0, y:20, duration:0.8}, '-=0.5')
+    .from('#hero .hero-glass-row', {opacity:0, y:20, duration:0.8}, '-=0.4');
 }
-
-/* ============ HERO CHAR SPLITTING FOR REVEAL ============ */
-const heroTitle = document.getElementById('heroTitle');
-const rawTitleHTML = "Happy Birthday<span class='hero-name cursive'>FAriha</span>";
-heroTitle.innerHTML = '';
-"Happy Birthday".split('').forEach(char => {
-  const span = document.createElement('span');
-  span.className = 'char';
-  span.innerHTML = char === ' ' ? '&nbsp;' : char;
-  heroTitle.appendChild(span);
-});
-const nameSpan = document.createElement('span');
-nameSpan.className = 'hero-name cursive char';
-nameSpan.style.display = 'block';
-"FAriha".split('').forEach(char => {
-  const innerSpan = document.createElement('span');
-  innerSpan.className = 'char';
-  innerSpan.innerText = char;
-  nameSpan.appendChild(innerSpan);
-});
-heroTitle.appendChild(nameSpan);
 
 /* ============ CONTENT DATA ============ */
 const letterMessage = `Happy Birthday! Aaj tumhara din hai, aur main bas tumhari khushi chahta hoon.
@@ -1424,164 +1071,66 @@ const timelineData = [
   {year:"What's Ahead", title:'The Future', text:'More years, more laughter, and more birthdays to celebrate the person you are.'}
 ];
 
-// 1. Envelope opening + Typewriter text logic
-const envelope = document.getElementById('letterEnvelope');
-let letterOpened = false;
-envelope.addEventListener('click', function() {
-  if(!letterOpened) {
-    this.classList.add('open');
-    letterOpened = true;
-    gsap.delayedCall(1.0, typeLetter);
-  }
-});
-
-function typeLetter(){
-  const el = document.getElementById('letterText');
-  const cursorSpan = document.createElement('span');
-  cursorSpan.className='cursor-blink';
-  let i=0;
-  const speed = 25;
-  function type(){
-    if(i <= letterMessage.length){
-      el.textContent = letterMessage.slice(0,i);
-      el.appendChild(cursorSpan);
-      i++;
-      setTimeout(type, speed);
-    } else {
-      cursorSpan.remove();
-      gsap.to('#letterSign', {opacity:1, y:0, duration:1, ease:'power2.out'});
-    }
-  }
-  type();
-}
-
-// 2. Polaroid 3D Tilt Hover Array
+// Gallery Setup
 const galleryTrack = document.getElementById('galleryTrack');
-for(let i=1; i<=8; i++){
+for(let i=1;i<=8;i++){
   const card = document.createElement('div');
   card.className='gcard';
-  card.setAttribute('data-id', i);
   card.innerHTML = `
-    <div class="gcard-img-wrap">
-      <div class="ph"><i class="fa-solid fa-image"></i><span>photo${i}.jpeg</span></div>
-      <img src="photo${i}.jpeg" alt="Memory ${i}" onerror="this.style.display='none';">
-    </div>
-    <div class="cap cursive">Memory ${i.toString().padStart(2,'0')}</div>`;
+    <div class="ph"><i class="fa-solid fa-image"></i><span>photo${i}.jpeg</span></div>
+    <img src="photo${i}.jpeg" alt="Memory ${i}" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; z-index:1;" onerror="this.style.display='none';">
+    <div class="gloss" style="z-index:2;"></div>
+    <div class="cap" style="z-index:3;">Memory ${i.toString().padStart(2,'0')}</div>`;
   galleryTrack.appendChild(card);
-
-  // 3D Tilt Interaction
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const xc = rect.width / 2;
-    const yc = rect.height / 2;
-    const angleX = (yc - y) / 10;
-    const angleY = (x - xc) / 10;
-    gsap.to(card, {
-      rotateX: angleX,
-      rotateY: angleY,
-      scale: 1.05,
-      z: 20,
-      duration: 0.3,
-      ease: 'power2.out'
-    });
-  });
-
-  card.addEventListener('mouseleave', () => {
-    const rot = i % 2 === 0 ? 3 : -3;
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      rotateZ: rot,
-      scale: 1,
-      z: 0,
-      duration: 0.6,
-      ease: 'power2.out'
-    });
-  });
-
-  // Lightbox opening
-  card.addEventListener('click', () => {
-    const imgUrl = `photo${i}.jpeg`;
-    const lightboxModal = document.getElementById('lightboxModal');
-    const lightboxImg = document.getElementById('lightboxImg');
-    
-    // Check if the image path is loaded correctly
-    const checkImg = card.querySelector('img');
-    if(checkImg && checkImg.style.display !== 'none') {
-      lightboxImg.src = imgUrl;
-      lightboxModal.classList.add('active');
-    }
-  });
 }
 
-// Lightbox Close triggers
-document.getElementById('lightboxClose').addEventListener('click', () => {
-  document.getElementById('lightboxModal').classList.remove('active');
-});
-document.getElementById('lightboxModal').addEventListener('click', (e) => {
-  if(e.target === document.getElementById('lightboxModal')) {
-    document.getElementById('lightboxModal').classList.remove('active');
-  }
-});
-
-// 3. Reasons Carousel setup
-const reasonsCarousel = document.getElementById('reasonsCarousel');
+// Reasons Setup
+const reasonsGrid = document.getElementById('reasonsGrid');
 reasons.forEach((r,i)=>{
   const card = document.createElement('div');
-  card.className='rcard';
+  card.className='rcard reveal';
   card.innerHTML = `<div class="num">0${i+1}</div><i class="${r.icon}"></i><h3>${r.title}</h3><p>${r.text}</p>`;
-  reasonsCarousel.appendChild(card);
+  reasonsGrid.appendChild(card);
 });
 
-// Update active carousel card based on proximity scroll position
-reasonsCarousel.addEventListener('scroll', () => {
-  const cards = reasonsCarousel.querySelectorAll('.rcard');
-  const containerCenter = reasonsCarousel.scrollLeft + reasonsCarousel.clientWidth / 2;
-  
-  cards.forEach(card => {
-    const cardCenter = card.offsetLeft + card.clientWidth / 2;
-    const distance = Math.abs(containerCenter - cardCenter);
-    
-    if (distance < 150) {
-      card.classList.add('active-card');
-    } else {
-      card.classList.remove('active-card');
-    }
-  });
-});
-// Set initial active card
-gsap.delayedCall(0.5, () => {
-  const firstCard = reasonsCarousel.querySelector('.rcard');
-  if(firstCard) firstCard.classList.add('active-card');
-});
-
-// 4. Timeline Setup
+// Timeline Setup
 const tlWrap = document.getElementById('tlWrap');
 timelineData.forEach(item=>{
   const el = document.createElement('div');
-  el.className='tl-item';
+  el.className='tl-item reveal';
   el.innerHTML = `<div class="tl-dot"></div><div class="tl-year">${item.year}</div><div class="tl-title serif">${item.title}</div><div class="tl-desc">${item.text}</div>`;
   tlWrap.appendChild(el);
 });
 
 /* ============ SCROLL ANIMATIONS ============ */
 function initScrollAnimations(){
-
-  // Hero Parallax effect
-  gsap.to('#hero .hero-inner', {
-    y: 120,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: true
-    }
+  ScrollTrigger.create({
+    trigger:'#letter',
+    start:'top 60%',
+    once:true,
+    onEnter: typeLetter
   });
 
-  // Gallery horizontal pin track
+  function typeLetter(){
+    const el = document.getElementById('letterText');
+    const cursorSpan = document.createElement('span');
+    cursorSpan.className='cursor-blink';
+    let i=0;
+    const speed = 25; // Slower typewriter so she can feel every word
+    function type(){
+      if(i <= letterMessage.length){
+        el.textContent = letterMessage.slice(0,i);
+        el.appendChild(cursorSpan);
+        i++;
+        setTimeout(type, speed);
+      } else {
+        cursorSpan.remove();
+        gsap.to('#letterSign', {opacity:1, y:0, duration:1, ease:'power2.out'});
+      }
+    }
+    type();
+  }
+
   const track = document.getElementById('galleryTrack');
   const trackWidth = track.scrollWidth;
   gsap.to(track, {
@@ -1597,40 +1146,33 @@ function initScrollAnimations(){
     }
   });
 
-  // Reasons Carousel scaling
-  gsap.utils.toArray('.rcard').forEach((card,i)=>{
-    gsap.fromTo(card, {opacity:0, scale:0.8, y: 50}, {
-      opacity: 0.6, scale: 0.9, y: 0,
-      duration: 1.0, ease:'power3.out',
-      scrollTrigger:{ trigger:card, start:'top 90%', toggleActions:'play none none reverse' }
-    });
-  });
-
-  // Story timeline visual drawing mechanics
-  const tlProgressLine = document.getElementById('tlProgressLine');
-  gsap.to(tlProgressLine, {
-    height: '100%',
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.tl-wrap',
-      start: 'top 40%',
-      end: 'bottom 50%',
-      scrub: true
-    }
-  });
-
-  // Scale-bounce pop-in milestone elements
-  gsap.utils.toArray('.tl-item').forEach(item=>{
-    ScrollTrigger.create({
-      trigger: item,
-      start: 'top 75%',
-      onEnter: () => {
-        item.classList.add('tl-visible');
+  document.querySelectorAll('.gcard').forEach((card,i)=>{
+    gsap.fromTo(card, {opacity:0.4, scale:0.92}, {
+      opacity:1, scale:1,
+      scrollTrigger:{
+        trigger:card,
+        start:'left 90%',
+        toggleActions:'play none none reverse'
       }
     });
   });
 
-  // Generic reveal elements (headings, eyebrows)
+  gsap.utils.toArray('.rcard').forEach((card,i)=>{
+    gsap.fromTo(card, {opacity:0, y:60, rotateX:8}, {
+      opacity:1, y:0, rotateX:0,
+      duration:0.8, ease:'power3.out',
+      delay:(i%4)*0.08,
+      scrollTrigger:{ trigger:card, start:'top 88%', toggleActions:'play none none reverse' }
+    });
+  });
+
+  gsap.utils.toArray('.tl-item').forEach(item=>{
+    gsap.fromTo(item, {opacity:0, x:-40}, {
+      opacity:1, x:0, duration:0.9, ease:'power3.out',
+      scrollTrigger:{ trigger:item, start:'top 85%', toggleActions:'play none none reverse' }
+    });
+  });
+
   gsap.utils.toArray('.eyebrow, .gallery-title').forEach(el=>{
     gsap.fromTo(el, {opacity:0, y:30}, {
       opacity:1, y:0, duration:0.9, ease:'power3.out',
@@ -1638,7 +1180,6 @@ function initScrollAnimations(){
     });
   });
 
-  // Ending section reveals
   gsap.utils.toArray('#ending .reveal').forEach((el,i)=>{
     gsap.fromTo(el, {opacity:0, y:40}, {
       opacity:1, y:0, duration:1, ease:'power3.out',
@@ -1648,12 +1189,11 @@ function initScrollAnimations(){
   });
 
   ScrollTrigger.refresh();
-  bindMagneticButtons();
 }
 
 function endingBurst(){
   if(typeof confetti === 'function'){
-    confetti({ particleCount:150, spread:110, startVelocity:38, colors:['#d6b578','#e3aebb','#f8f4ee'], origin:{y:0.7} });
+    confetti({ particleCount:120, spread:100, startVelocity:38, colors:['#d6b578','#e3aebb','#f8f4ee'], origin:{y:0.7} });
   }
   launchFireworks(4);
 }
@@ -1723,7 +1263,7 @@ function animatePetals(){
 }
 animatePetals();
 
-/* ============ INTERACTIVE CAKE ============ */
+/* ============ CAKE INTERACTION ============ */
 let candlesLit = false;
 const cakeWrap = document.getElementById('cakeWrap');
 const cakeHint = document.getElementById('cakeHint');
@@ -1742,12 +1282,8 @@ cakeWrap.addEventListener('click', ()=>{
       gsap.to(f,{opacity:0, scale:0.3, duration:0.3});
     });
     cakeHint.textContent = 'Wish made ✨ tap to relight';
-    
-    // Triple confetti burst upon blow out event
     if(typeof confetti === 'function'){
-      confetti({ particleCount:100, spread:120, startVelocity:45, colors:['#d6b578','#e3aebb','#b8768a','#f8f4ee'], origin:{ y:0.55 } });
-      confetti({ particleCount:70, angle: 60, spread: 80, origin: { x: 0 } });
-      confetti({ particleCount:70, angle: 120, spread: 80, origin: { x: 1 } });
+      confetti({ particleCount:150, spread:120, startVelocity:45, colors:['#d6b578','#e3aebb','#b8768a','#f8f4ee'], origin:{ y:0.55 } });
     }
     launchFireworks(3);
   }
