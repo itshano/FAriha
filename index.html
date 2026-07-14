@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Happy Birthday, FAriha</title>
+<title>Happy Birthday, Iqra</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -772,7 +772,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <section id="hero" class="section">
     <div class="hero-inner">
       <div class="hero-kicker reveal">15th of July</div>
-      <h1 class="hero-title reveal">Happy Birthday<span class="hero-name">FAriha</span></h1>
+      <h1 class="hero-title reveal">Happy Birthday<span class="hero-name">Iqra</span></h1>
       <p class="hero-sub reveal">A quiet little corner of the internet, built just to say — the world is brighter with you in it.</p>
       <div class="hero-glass-row reveal">
         <div class="glass-chip"><i class="fa-solid fa-champagne-glasses"></i> Since forever, yours</div>
@@ -787,7 +787,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="section-inner">
       <div class="letter-paper">
         <div class="letter-mark">— A Letter For You —</div>
-        <h2 class="letter-heading">My Dearest FAriha</h2>
+        <h2 class="letter-heading">My Dearest Iqra</h2>
         <div id="letterText"></div>
         <div class="letter-sign" id="letterSign">Forever yours, Shano</div>
       </div>
@@ -868,12 +868,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <!-- ENDING -->
   <section id="ending" class="section">
     <div class="end-line1 reveal">I Love You</div>
-    <div class="end-line2 reveal">Happy Birthday, Again <span class="name">FAriha</span> <i class="fa-solid fa-heart rose-text"></i></div>
+    <div class="end-line2 reveal">Happy Birthday, Again <span class="name">Iqra</span> <i class="fa-solid fa-heart rose-text"></i></div>
     <div class="end-from reveal">Forever Yours</div>
     <div class="end-signature reveal">Shano</div>
   </section>
 
-  <div class="footer-note">made with care, one line of code at a time — for FAriha</div>
+  <div class="footer-note">made with care, one line of code at a time — for Iqra</div>
 </div>
 
 <!-- MUSIC WIDGET -->
@@ -1004,7 +1004,7 @@ function checkPassword() {
   const formattedInput = input.toLowerCase().replace(/\s+/g, '');
   const correctTarget = "Iqrar e man".toLowerCase().replace(/\s+/g, '');
   
-  if (formattedInput === correctTarget || formattedInput === 'fariha') {
+  if (formattedInput === correctTarget || formattedInput === 'iqra') {
     errorElement.style.opacity = 0;
     
     // Smooth transition to main experience
@@ -1071,14 +1071,14 @@ const timelineData = [
   {year:"What's Ahead", title:'The Future', text:'More years, more laughter, and more birthdays to celebrate the person you are.'}
 ];
 
-// Gallery Setup
+// Gallery Setup (Updated backup check with double extension support)
 const galleryTrack = document.getElementById('galleryTrack');
 for(let i=1;i<=8;i++){
   const card = document.createElement('div');
   card.className='gcard';
   card.innerHTML = `
-    <div class="ph"><i class="fa-solid fa-image"></i><span>photo${i}.jpeg</span></div>
-    <img src="photo${i}.jpeg" alt="Memory ${i}" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; z-index:1;" onerror="this.style.display='none';">
+    <div class="ph"><i class="fa-solid fa-image"></i><span>photo${i}.jpeg.jpg</span></div>
+    <img src="images/photo${i}.jpeg.jpg" alt="Memory ${i}" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; z-index:1;" onerror="this.onerror=null; this.src='images/photo${i}.jpeg';">
     <div class="gloss" style="z-index:2;"></div>
     <div class="cap" style="z-index:3;">Memory ${i.toString().padStart(2,'0')}</div>`;
   galleryTrack.appendChild(card);
