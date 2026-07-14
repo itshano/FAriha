@@ -209,6 +209,90 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   color:var(--gold-light);opacity:0;
 }
 
+/* ================= PASSWORD MODAL ================= */
+#passwordModal{
+  position:fixed;inset:0;z-index:9500;
+  background:rgba(8,6,10,0.95);
+  backdrop-filter:blur(25px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;
+  transition:opacity 0.6s var(--ease), visibility 0.6s var(--ease);
+  padding:24px;
+}
+#passwordModal.active{opacity:1;visibility:visible;}
+.password-box{
+  max-width:400px;
+  width:100%;
+  padding:40px 30px;
+  background:linear-gradient(160deg, rgba(248,244,238,0.06), rgba(248,244,238,0.02));
+  border:1px solid var(--glass-border);
+  border-radius:24px;
+  text-align:center;
+  box-shadow:0 30px 60px rgba(0,0,0,0.8), var(--shadow-gold);
+  transform:scale(0.9);
+  transition:transform 0.6s var(--ease);
+}
+#passwordModal.active .password-box{transform:scale(1);}
+.password-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;
+  color:var(--white);
+  margin-bottom:12px;
+  font-weight:600;
+}
+.password-desc{
+  font-size:0.85rem;
+  color:var(--rose-gold-light);
+  margin-bottom:28px;
+  letter-spacing:1px;
+}
+.password-input-wrap{
+  position:relative;
+  margin-bottom:20px;
+}
+.password-input-wrap input{
+  width:100%;
+  padding:16px 24px;
+  background:rgba(0,0,0,0.4);
+  border:1px solid var(--glass-border);
+  border-radius:12px;
+  color:var(--white);
+  font-family:inherit;
+  font-size:1.1rem;
+  text-align:center;
+  letter-spacing:2px;
+  outline:none;
+  transition:border-color 0.3s;
+}
+.password-input-wrap input:focus{
+  border-color:var(--gold);
+}
+.password-btn{
+  width:100%;
+  padding:15px;
+  background:linear-gradient(120deg, var(--gold), var(--rose-gold));
+  color:var(--black);
+  font-weight:600;
+  font-size:0.9rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border-radius:12px;
+  box-shadow:0 10px 20px rgba(184,118,138,0.3);
+  transition:transform 0.3s var(--ease), box-shadow 0.3s;
+}
+.password-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 25px rgba(184,118,138,0.4), var(--shadow-gold);
+}
+.error-msg{
+  color:#ff4d4d;
+  font-size:0.8rem;
+  margin-top:12px;
+  min-height:20px;
+  opacity:0;
+  transition:opacity 0.3s;
+}
+
 /* ================= MAIN WRAP ================= */
 #main{position:relative;z-index:1;opacity:0;}
 
@@ -303,11 +387,23 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .scroll-cue .line{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:scrollLine 2s ease-in-out infinite;}
 @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
 
-/* floating hearts / petals canvas */
+/* floating hearts / petals canvas & background video styles */
 #petalCanvas, #confettiCanvas, #fireworkCanvas{
   position:fixed;inset:0;pointer-events:none;z-index:5;
 }
 #confettiCanvas, #fireworkCanvas{z-index:40;}
+
+#bgVideo{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  z-index:0;
+  opacity:0;
+  transition:opacity 2s ease;
+  pointer-events:none;
+}
 
 /* ================= LOVE LETTER ================= */
 #letter{padding-top:60px;padding-bottom:60px;}
@@ -615,6 +711,11 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 <div class="cursor-glow" id="cursorGlow"></div>
 <div class="cursor-dot" id="cursorDot"></div>
 
+<!-- BACKGROUND VIDEO -->
+<video id="bgVideo" loop muted playsinline>
+  <source src="music/video.mp4" type="video/mp4">
+</video>
+
 <!-- BACKGROUND -->
 <div class="aurora-bg">
   <div class="aurora-blob b1"></div>
@@ -649,6 +750,19 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   <div class="welcome-text">Someone made something <span class="accent">special</span><br>only for you<span class="accent">...</span></div>
   <button class="heart-btn" id="heartBtn" aria-label="Enter"><i class="fa-solid fa-heart"></i></button>
   <div class="touch-label" id="touchLabel">Touch the Heart</div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div id="passwordModal">
+  <div class="password-box">
+    <div class="password-title">Private Vault</div>
+    <div class="password-desc">Please enter the secret key to unlock</div>
+    <div class="password-input-wrap">
+      <input type="password" id="passInput" placeholder="Enter password" maxlength="20">
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+    <button class="password-btn" id="submitPass">Unlock Experience</button>
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -866,8 +980,47 @@ function showWelcome(){
     .to('#touchLabel', {opacity:.85, duration:0.6}, '-=0.4');
 }
 
-document.getElementById('heartBtn').addEventListener('click', enterSite);
+document.getElementById('heartBtn').addEventListener('click', triggerPasswordModal);
 
+/* ============ PASSWORD CHECK MODULE ============ */
+function triggerPasswordModal(){
+  gsap.to('#welcome', {opacity:0, duration:0.6, onComplete:()=>{
+    document.getElementById('welcome').style.display='none';
+    document.getElementById('passwordModal').classList.add('active');
+    document.getElementById('passInput').focus();
+  }});
+}
+
+// Password Submit Triggers
+document.getElementById('submitPass').addEventListener('click', checkPassword);
+document.getElementById('passInput').addEventListener('keypress', (e)=>{
+  if(e.key === 'Enter') checkPassword();
+});
+
+function checkPassword() {
+  const input = document.getElementById('passInput').value.trim();
+  const errorElement = document.getElementById('errorMsg');
+  
+  // Checking lowercase, uppercase and without spaces to make it user-friendly
+  const formattedInput = input.toLowerCase().replace(/\s+/g, '');
+  const correctTarget = "Iqrar e man".toLowerCase().replace(/\s+/g, '');
+  
+  if (formattedInput === correctTarget || formattedInput === 'fariha') {
+    errorElement.style.opacity = 0;
+    
+    // Smooth transition to main experience
+    gsap.to('#passwordModal', {opacity:0, scale:1.05, duration:0.8, ease:'power2.inOut', onComplete:()=>{
+      document.getElementById('passwordModal').style.display='none';
+      enterSite();
+    }});
+  } else {
+    errorElement.textContent = "That's not the secret code, try again ❤️";
+    errorElement.style.opacity = 1;
+    gsap.fromTo('.password-box', {x:-10}, {x:10, duration:0.1, repeat:5, yoyo:true, ease:'none'});
+  }
+}
+
+/* ============ ENTER EXPERIENCE ============ */
 function enterSite(){
   const audio = document.getElementById('bgMusic');
   audio.volume = 0.55;
@@ -875,15 +1028,19 @@ function enterSite(){
     document.getElementById('musicToggle').classList.add('playing');
   }).catch(()=>{});
 
+  const video = document.getElementById('bgVideo');
+  if(video){
+    video.play().then(()=>{
+      gsap.to(video, {opacity: 0.35, duration: 2.5});
+    }).catch(err => console.log("Video autoplay blocked or file missing:", err));
+  }
+
   const tl = gsap.timeline({
     onComplete:()=>{
-      document.getElementById('welcome').style.display='none';
       initScrollAnimations();
     }
   });
-  tl.to('.heart-btn', {scale:1.4, duration:0.35, ease:'power2.out'})
-    .to('#welcome', {opacity:0, duration:0.9, ease:'power2.inOut'}, '-=0.1')
-    .to('#main', {opacity:1, duration:1.2, ease:'power2.out'}, '-=0.5')
+  tl.to('#main', {opacity:1, duration:1.2, ease:'power2.out'})
     .from('#hero .hero-kicker', {opacity:0, y:20, duration:0.8}, '-=0.6')
     .from('#hero .hero-title', {opacity:0, y:40, duration:1, ease:'power3.out'}, '-=0.6')
     .from('#hero .hero-sub', {opacity:0, y:20, duration:0.8}, '-=0.5')
@@ -919,14 +1076,14 @@ const timelineData = [
   {year:"What's Ahead", title:'The Future', text:'More years, more laughter, and more birthdays to celebrate the person you are.'}
 ];
 
-// Gallery Setup (.jpeg Compatibility and Smooth Absolute Overlay Integration)
+// Gallery Setup
 const galleryTrack = document.getElementById('galleryTrack');
 for(let i=1;i<=8;i++){
   const card = document.createElement('div');
   card.className='gcard';
   card.innerHTML = `
     <div class="ph"><i class="fa-solid fa-image"></i><span>photo${i}.jpeg</span></div>
-    <img src="images/photo${i}.jpeg" alt="Memory ${i}" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; z-index:1;" onerror="this.style.display='none';">
+    <img src="photo${i}.jpeg" alt="Memory ${i}" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; z-index:1;" onerror="this.style.display='none';">
     <div class="gloss" style="z-index:2;"></div>
     <div class="cap" style="z-index:3;">Memory ${i.toString().padStart(2,'0')}</div>`;
   galleryTrack.appendChild(card);
