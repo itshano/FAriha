@@ -442,8 +442,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 }
 #letterText{
   font-family:'Playfair Display',serif;
-  font-size:clamp(1rem,2vw,1.18rem);
-  line-height:2;
+  font-size:clamp(0.95rem,1.9vw,1.1rem);
+  line-height:1.9;
   color:var(--white);
   white-space:pre-wrap;
 }
@@ -1001,7 +1001,6 @@ function checkPassword() {
   const input = document.getElementById('passInput').value.trim();
   const errorElement = document.getElementById('errorMsg');
   
-  // Checking lowercase, uppercase and without spaces to make it user-friendly
   const formattedInput = input.toLowerCase().replace(/\s+/g, '');
   const correctTarget = "Iqrar e man".toLowerCase().replace(/\s+/g, '');
   
@@ -1048,15 +1047,11 @@ function enterSite(){
 }
 
 /* ============ CONTENT DATA ============ */
-const letterMessage = `On this day, the world quietly became a better place — it just took me a while to notice.
+const letterMessage = `Happy Birthday! Aaj tumhara din hai, aur main bas tumhari khushi chahta hoon.
 
-FAriha, you carry warmth the way some people carry light, without even trying, without even knowing. The people around you are lucky, and I am luckier still.
+Aaj poore 1,067 din ho gaye hain tumhare bina... tumse door hue, par tumhare bina jeena jitna mushkil hai, main aaj bhi tumhari yaadon ke sahare muskura leta hoon. Roz raat ko tumhari tasveer dekh kar sona aur roz tumhari salamti aur khushi ke liye sadqa utarna ab meri zindagi ka ek khubsurat hissa ban chuka hai.
 
-I hope this year hands you everything you've been quietly hoping for, and a little more besides. I hope you laugh often, rest well, and know — without a shadow of doubt — how deeply you are loved.
-
-Here's to another year of your kindness, your strength, and that laugh that makes bad days disappear.
-
-Happy Birthday, FAriha.`;
+Han, main dosto mein uthta baithta hoon, hansta hoon, move on kar chuka hoon, par is dil ke sab se pakizah kone mein tumhara pyar aur tumhari yaad aaj bhi waisi hi mehfooz hai. Tum meri zindagi mein aane wali pehli aur aakhri larki ho... aur hamesha rahogi.`;
 
 const reasons = [
   {icon:'fa-solid fa-face-smile-beam', title:'Your Smile', text:'It has a way of making even ordinary moments feel like something worth remembering.'},
@@ -1121,7 +1116,7 @@ function initScrollAnimations(){
     const cursorSpan = document.createElement('span');
     cursorSpan.className='cursor-blink';
     let i=0;
-    const speed = 18;
+    const speed = 25; // Slower typewriter so she can feel every word
     function type(){
       if(i <= letterMessage.length){
         el.textContent = letterMessage.slice(0,i);
